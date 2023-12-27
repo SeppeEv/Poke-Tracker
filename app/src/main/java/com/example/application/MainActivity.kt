@@ -273,14 +273,25 @@ fun TypeElementRow(
 
 @Composable
 fun HomeScreen(modifier: Modifier = Modifier) {
+    // TODO: Check for landascape mode
+    val image = painterResource(R.drawable.lugia_background)
+
+    Image(
+        painter = image,
+        contentDescription = null,
+        contentScale = ContentScale.Crop,
+        modifier = Modifier
+            .fillMaxSize(),
+        alpha = 0.5f,
+    )
     Column(
-        modifier
+        modifier = modifier
             .verticalScroll(rememberScrollState()),
     ) {
         Spacer(Modifier.height(16.dp))
         Searchbar(Modifier.padding(horizontal = 16.dp))
         HomeSection(title = R.string.types) {
-            TypeElemntRow()
+            TypeElementRow() // Corrected the function name
         }
         HomeSection(title = R.string.generations) {
             GenerationCardGrid()
