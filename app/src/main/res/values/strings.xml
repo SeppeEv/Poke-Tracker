@@ -2,4 +2,7 @@
     <string name="app_name">Application</string>
     <string name="hello_user">Hello user!</string>
     <string name="from_seppe">From Seppe</string>
+    <string name="placeholder_search">Search</string>
+    <string name="grass_type">Grass</string>
+    <string name="generation_1">Generation 1</string>
 </resources>
