@@ -31,6 +31,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Icon
@@ -361,6 +362,21 @@ fun BottomNavigation(modifier: Modifier = Modifier) {
                 )
             },
             selected = true,
+            onClick = {},
+        )
+        NavigationBarItem(
+            icon = {
+                Icon(
+                    imageVector = Icons.Default.Favorite,
+                    contentDescription = null,
+                )
+            },
+            label = {
+                Text(
+                    text = stringResource(R.string.bottom_navigation_collection),
+                )
+            },
+            selected = false,
             onClick = {},
         )
         NavigationBarItem(
