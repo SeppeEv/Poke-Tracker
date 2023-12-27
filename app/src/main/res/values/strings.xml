@@ -4,5 +4,10 @@
     <string name="from_seppe">From Seppe</string>
     <string name="placeholder_search">Search</string>
     <string name="grass_type">Grass</string>
-    <string name="generation_1">Generation 1</string>
+    <string name="generation_1">Gen 1</string>
+    <string name="water_type">Water</string>
+    <string name="types">Types</string>
+    <string name="generations">Generations</string>
+    <string name="bottom_navigation_home">Home\n</string>
+    <string name="bottom_navigation_profile">Profile</string>
 </resources>
