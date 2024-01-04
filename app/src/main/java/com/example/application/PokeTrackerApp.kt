@@ -24,25 +24,80 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.windowsizeclass.WindowSizeClass
-import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.application.screens.home.HomeScreen
-import com.example.application.ui.theme.ApplicationTheme
+import com.example.application.screens.utils.PokeTrackerNavigationType
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun PokeTrackerApp(navigationType: PokeTrackerNavigationType) {
+    when (navigationType) {
+        PokeTrackerNavigationType.BOTTOM_NAVIGATION -> {
+            Scaffold(
+                topBar = {
+                    TopAppBar(
+                        title = {
+                            Text("top app bar")
+                        },
+                    )
+                },
+                bottomBar = {
+                    BottomNavigation()
+                },
+            ) { padding ->
+                HomeScreen(Modifier.padding(padding))
+            }
+        }
+        PokeTrackerNavigationType.NAVIGATION_RAIL -> {
+            Surface(color = MaterialTheme.colorScheme.background) {
+                Row {
+                    PokeTrackerNavigationRail()
+                    HomeScreen()
+                }
+            }
+        }
+
+        else -> {
+            Scaffold(
+                topBar = {
+                    TopAppBar(
+                        title = {
+                            Text("top app bar")
+                        },
+                    )
+                },
+                bottomBar = {
+                    BottomNavigation()
+                },
+            ) { padding ->
+                HomeScreen(Modifier.padding(padding))
+            }
+        }
+    }
+}
 
 @Composable
-fun PokeTrackerApp(windowSize: WindowSizeClass) {
-    when (windowSize.widthSizeClass) {
-        WindowWidthSizeClass.Compact -> {
-            PokeTrackerAppPortrait()
-        }
-        WindowWidthSizeClass.Expanded -> {
-            PokeTrackerAppLandscape()
+fun HomeSection(
+    @StringRes title: Int,
+    modifier: Modifier = Modifier,
+    content: @Composable () -> Unit,
+) {
+    Column(
+        modifier = modifier,
+    ) {
+        Column(modifier) {
+            Text(
+                text = stringResource(title),
+                style = MaterialTheme.typography.titleMedium,
+                modifier = Modifier
+                    .paddingFromBaseline(top = 40.dp, bottom = 16.dp)
+                    .padding(horizontal = 16.dp),
+            )
+            content()
         }
     }
 }
@@ -101,49 +156,6 @@ fun BottomNavigation(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun HomeSection(
-    @StringRes title: Int,
-    modifier: Modifier = Modifier,
-    content: @Composable () -> Unit,
-) {
-    Column(
-        modifier = modifier,
-    ) {
-        Column(modifier) {
-            Text(
-                text = stringResource(title),
-                style = MaterialTheme.typography.titleMedium,
-                modifier = Modifier
-                    .paddingFromBaseline(top = 40.dp, bottom = 16.dp)
-                    .padding(horizontal = 16.dp),
-            )
-            content()
-        }
-    }
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun PokeTrackerAppPortrait() {
-    ApplicationTheme {
-        Scaffold(
-            topBar = {
-                TopAppBar(
-                    title = {
-                        Text("top app bar")
-                    },
-                )
-            },
-            bottomBar = {
-                BottomNavigation()
-            },
-        ) { padding ->
-            HomeScreen(Modifier.padding(padding))
-        }
-    }
-}
-
-@Composable
 fun PokeTrackerNavigationRail(modifier: Modifier = Modifier) {
     NavigationRail(
         modifier = modifier.padding(start = 8.dp, end = 8.dp),
@@ -197,28 +209,4 @@ fun PokeTrackerNavigationRail(modifier: Modifier = Modifier) {
             )
         }
     }
-}
-
-@Composable
-fun PokeTrackerAppLandscape() {
-    ApplicationTheme {
-        Surface(color = MaterialTheme.colorScheme.background) {
-            Row {
-                PokeTrackerNavigationRail()
-                HomeScreen()
-            }
-        }
-    }
-}
-
-@Preview
-@Composable
-fun PokeTrackerAppLandscapePreview() {
-    PokeTrackerAppLandscape()
-}
-
-@Preview
-@Composable
-fun PokeTrackerAppPortraitPreview() {
-    PokeTrackerAppPortrait()
 }
