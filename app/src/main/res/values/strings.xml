@@ -11,4 +11,9 @@
     <string name="bottom_navigation_home">Home\n</string>
     <string name="bottom_navigation_profile">Profile</string>
     <string name="bottom_navigation_collection">Collection</string>
+    <string name="bottom_navigation_favorites">Favorites</string>
+    <string name="bulbasaur">bulbasaur</string>
+    <string name="height">height</string>
+    <string name="weight">weight</string>
+    <string name="abilities">abilities</string>
 </resources>
