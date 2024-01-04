@@ -34,6 +34,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -84,7 +85,10 @@ fun PokeTrackerApp(
                     )
                 },
                 bottomBar = {
-                    BottomNavigation()
+                    BottomNavigation(
+                        selectedDestination = navController.currentDestination,
+                        onTabPressed = { node: String -> navController.navigate(node) },
+                    )
                 },
             ) { innerPadding ->
                 NavHost(
@@ -156,7 +160,10 @@ fun PokeTrackerApp(
                     )
                 },
                 bottomBar = {
-                    BottomNavigation()
+                    BottomNavigation(
+                        selectedDestination = navController.currentDestination,
+                        onTabPressed = { node: String -> navController.navigate(node) },
+                    )
                 },
             ) { innerPadding ->
                 HomeScreen(
@@ -196,7 +203,11 @@ fun TopNavigation(
 }
 
 @Composable
-fun BottomNavigation(modifier: Modifier = Modifier) {
+fun BottomNavigation(
+    selectedDestination: NavDestination?,
+    onTabPressed: (String) -> Unit,
+    modifier: Modifier = Modifier,
+) {
     NavigationBar(
         modifier = modifier,
     ) {
@@ -213,7 +224,7 @@ fun BottomNavigation(modifier: Modifier = Modifier) {
                 )
             },
             selected = true,
-            onClick = {},
+            onClick = { onTabPressed(PokeTrackerScreen.Home.route) },
         )
         NavigationBarItem(
             icon = {
@@ -228,7 +239,7 @@ fun BottomNavigation(modifier: Modifier = Modifier) {
                 )
             },
             selected = false,
-            onClick = {},
+            onClick = { onTabPressed(PokeTrackerScreen.Favorites.route) },
         )
         NavigationBarItem(
             icon = {
@@ -243,7 +254,7 @@ fun BottomNavigation(modifier: Modifier = Modifier) {
                 )
             },
             selected = false,
-            onClick = {},
+            onClick = { onTabPressed(PokeTrackerScreen.Profile.route) },
         )
     }
 }
