@@ -20,7 +20,9 @@ import androidx.compose.ui.unit.dp
 import com.example.application.R
 
 @Composable
-fun PokemonDetailScreen() {
+fun PokemonDetailScreen(
+    selectedPokemon: String?,
+) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -39,7 +41,7 @@ fun PokemonDetailScreen() {
                 horizontalArrangement = Arrangement.SpaceBetween,
             ) {
                 Text(
-                    text = stringResource(R.string.bulbasaur),
+                    text = selectedPokemon ?: "No pokemon found",
                     style = MaterialTheme.typography.headlineMedium.copy(fontWeight = FontWeight.Bold),
                 )
                 Text(
@@ -128,6 +130,8 @@ private fun StatusColumn(title: String, value: String) {
 @Composable
 fun PokemonScreenPreview() {
     Surface {
-        PokemonDetailScreen()
+        PokemonDetailScreen(
+            selectedPokemon = "Bulbasaur",
+        )
     }
 }

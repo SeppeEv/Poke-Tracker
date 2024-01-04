@@ -61,6 +61,7 @@ fun PokeTrackerApp(
 ) {
     var selectedType by remember { mutableStateOf<String?>(null) }
     var selectedGeneration by remember { mutableStateOf<String?>(null) }
+    var selectedPokemon by remember { mutableStateOf<String?>(null) }
 
     when (navigationType) {
         PokeTrackerNavigationType.BOTTOM_NAVIGATION -> {
@@ -100,13 +101,25 @@ fun PokeTrackerApp(
                         ProfileScreen()
                     }
                     composable(PokeTrackerScreen.Detail.route) {
-                        PokemonDetailScreen()
+                        PokemonDetailScreen(selectedPokemon)
                     }
                     composable(PokeTrackerScreen.PokemonByType.route) {
-                        PokemonByTypeScreen(selectedType)
+                        PokemonByTypeScreen(
+                            selectedType,
+                            onSelectPokemon = { pokemon ->
+                                selectedPokemon = pokemon
+                                navController.navigate(PokeTrackerScreen.Detail.route)
+                            },
+                        )
                     }
                     composable(PokeTrackerScreen.PokemonByGeneration.route) {
-                        PokemonByGenerationScreen(selectedGeneration)
+                        PokemonByGenerationScreen(
+                            selectedGeneration,
+                            onSelectPokemon = { pokemon ->
+                                selectedPokemon = pokemon
+                                navController.navigate(PokeTrackerScreen.Detail.route)
+                            },
+                        )
                     }
                 }
             }

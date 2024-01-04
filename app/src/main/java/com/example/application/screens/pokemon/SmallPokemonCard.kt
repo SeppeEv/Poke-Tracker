@@ -3,6 +3,7 @@ package com.example.application.screens.pokemon
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -29,6 +30,7 @@ import com.example.application.ui.theme.ApplicationTheme
 fun PokemonCard(
     @DrawableRes drawable: Int,
     @StringRes text: Int,
+    onSelectPokemon: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Surface(
@@ -39,7 +41,10 @@ fun PokemonCard(
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
-                .width(60.dp),
+                .width(60.dp)
+                .clickable {
+                    onSelectPokemon("Charizard")
+                },
         ) {
             Image(
                 painter = painterResource(drawable),
@@ -60,6 +65,7 @@ fun PokemonCard(
 
 @Composable
 fun PokemonListGrid(
+    onSelectPokemon: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     LazyVerticalGrid(
@@ -74,6 +80,7 @@ fun PokemonListGrid(
             PokemonCard(
                 drawable = R.drawable.bulbasaur_sprite,
                 text = R.string.bulbasaur,
+                onSelectPokemon,
                 Modifier.padding(8.dp),
             )
         }
@@ -84,6 +91,8 @@ fun PokemonListGrid(
 @Composable
 fun PokemonListGridPreview() {
     ApplicationTheme {
-        PokemonListGrid()
+        PokemonListGrid(
+            onSelectPokemon = {},
+        )
     }
 }

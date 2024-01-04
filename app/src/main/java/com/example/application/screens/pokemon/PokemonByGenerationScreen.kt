@@ -12,6 +12,7 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun PokemonByGenerationScreen(
     generation: String? = "Generation 1",
+    onSelectPokemon: (String) -> Unit,
 ) {
     Surface(
         color = MaterialTheme.colorScheme.background,
@@ -29,6 +30,7 @@ fun PokemonByGenerationScreen(
                 )
             }
             PokemonListGrid(
+                onSelectPokemon,
                 modifier = Modifier
                     .padding(top = 16.dp),
             )
