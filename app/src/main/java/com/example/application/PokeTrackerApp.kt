@@ -38,8 +38,9 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.application.screens.home.HomeScreen
 import com.example.application.screens.pokemon.FavoritePokemonsScreen
+import com.example.application.screens.pokemon.PokemonByGenerationScreen
+import com.example.application.screens.pokemon.PokemonByTypeScreen
 import com.example.application.screens.pokemon.PokemonDetailScreen
-import com.example.application.screens.pokemon.PokemonListScreen
 import com.example.application.screens.profile.ProfileScreen
 import com.example.application.screens.utils.PokeTrackerNavigationType
 
@@ -48,7 +49,8 @@ enum class PokeTrackerScreen(@StringRes val title: Int, val route: String) {
     Favorites(R.string.favorites, "favorites"),
     Profile(R.string.profile, "profile"),
     Detail(R.string.detail, "detail"),
-    List(R.string.list, "list"),
+    PokemonByType(R.string.pokemonByType, "type"),
+    PokemonByGeneration(R.string.pokemonByGeneration, "generation"),
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -58,6 +60,7 @@ fun PokeTrackerApp(
     navController: NavHostController = rememberNavController(),
 ) {
     var selectedType by remember { mutableStateOf<String?>(null) }
+    var selectedGeneration by remember { mutableStateOf<String?>(null) }
 
     when (navigationType) {
         PokeTrackerNavigationType.BOTTOM_NAVIGATION -> {
@@ -82,7 +85,11 @@ fun PokeTrackerApp(
                         HomeScreen(
                             onTypeClicked = { type ->
                                 selectedType = type
-                                navController.navigate(PokeTrackerScreen.List.route)
+                                navController.navigate(PokeTrackerScreen.PokemonByType.route)
+                            },
+                            onGenerationClicked = { generation ->
+                                selectedGeneration = generation
+                                navController.navigate(PokeTrackerScreen.PokemonByGeneration.route)
                             },
                         )
                     }
@@ -95,8 +102,11 @@ fun PokeTrackerApp(
                     composable(PokeTrackerScreen.Detail.route) {
                         PokemonDetailScreen()
                     }
-                    composable(PokeTrackerScreen.List.route) {
-                        PokemonListScreen(selectedType)
+                    composable(PokeTrackerScreen.PokemonByType.route) {
+                        PokemonByTypeScreen(selectedType)
+                    }
+                    composable(PokeTrackerScreen.PokemonByGeneration.route) {
+                        PokemonByGenerationScreen(selectedGeneration)
                     }
                 }
             }
@@ -105,7 +115,10 @@ fun PokeTrackerApp(
             Surface(color = MaterialTheme.colorScheme.background) {
                 Row {
                     PokeTrackerNavigationRail()
-                    HomeScreen()
+                    HomeScreen(onGenerationClicked = { generation ->
+                        selectedType = generation
+                        navController.navigate(PokeTrackerScreen.PokemonByGeneration.route)
+                    })
                 }
             }
         }
@@ -125,6 +138,10 @@ fun PokeTrackerApp(
             ) { innerPadding ->
                 HomeScreen(
                     modifier = Modifier.padding(innerPadding),
+                    onGenerationClicked = { generation ->
+                        selectedType = generation
+                        navController.navigate(PokeTrackerScreen.PokemonByGeneration.route)
+                    },
                 )
             }
         }

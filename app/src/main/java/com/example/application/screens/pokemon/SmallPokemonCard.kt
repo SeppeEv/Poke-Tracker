@@ -26,33 +26,6 @@ import com.example.application.R
 import com.example.application.ui.theme.ApplicationTheme
 
 @Composable
-fun PokemonListScreen(
-    selectedType: String? = "",
-) {
-    Surface(
-        color = MaterialTheme.colorScheme.background,
-        modifier = Modifier
-            .padding(16.dp),
-    ) {
-        Column(
-            modifier = Modifier
-                .padding(16.dp),
-        ) {
-            if (selectedType != null) {
-                Text(
-                    text = selectedType,
-                    style = MaterialTheme.typography.headlineMedium,
-                )
-            }
-            PokemonListGrid(
-                modifier = Modifier
-                    .padding(top = 16.dp),
-            )
-        }
-    }
-}
-
-@Composable
 fun PokemonCard(
     @DrawableRes drawable: Int,
     @StringRes text: Int,
@@ -84,20 +57,6 @@ fun PokemonCard(
         }
     }
 }
-
-/*
-@Preview
-@Composable
-fun PokemonCardPreview() {
-    ApplicationTheme {
-        PokemonCard(
-            drawable = R.drawable.bulbasaur_sprite,
-            text = R.string.bulbasaur,
-            Modifier.padding(8.dp),
-        )
-    }
-}
-*/
 
 @Composable
 fun PokemonListGrid(

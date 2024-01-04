@@ -20,6 +20,7 @@
     <string name="favorites">favorites</string>
     <string name="profile">profile</string>
     <string name="detail">detail</string>
-    <string name="list">list</string>
+    <string name="pokemonByType">type</string>
     <string name="type">Type</string>
+    <string name="pokemonByGeneration">generation</string>
 </resources>

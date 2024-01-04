@@ -49,6 +49,7 @@ import com.example.application.ui.theme.ApplicationTheme
 @Composable
 fun HomeScreen(
     onTypeClicked: (String) -> Unit = {},
+    onGenerationClicked: (String) -> Unit = {},
     modifier: Modifier = Modifier,
 ) {
     val image = painterResource(R.drawable.lugia_background)
@@ -72,10 +73,10 @@ fun HomeScreen(
             Spacer(Modifier.height(16.dp))
             Searchbar(Modifier.padding(horizontal = 16.dp))
             HomeSection(title = R.string.types) {
-                TypeElementRow(onTypeClicked) // Corrected the function name
+                TypeElementRow(onTypeClicked)
             }
             HomeSection(title = R.string.generations) {
-                GenerationCardGrid()
+                GenerationCardGrid(onGenerationClicked)
             }
         }
     }
@@ -85,7 +86,7 @@ fun HomeScreen(
 @Composable
 fun HomeScreenContentPreview() {
     ApplicationTheme {
-        HomeScreen()
+        HomeScreen(onGenerationClicked = {})
     }
 }
 
@@ -119,13 +120,14 @@ fun Searchbar(
 fun TypeElement(
     @DrawableRes drawable: Int,
     @StringRes text: Int,
-    OnTypeClicked: (String) -> Unit,
+    onTypeClicked: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
         modifier = modifier
             .clickable {
-                OnTypeClicked("GRASS")
+                // TODO: Pass the correct type to the OnTypeClicked lambda
+                onTypeClicked("GRASS")
             },
     ) {
         Column(
@@ -157,7 +159,7 @@ fun TypeElementPreview() {
         TypeElement(
             drawable = R.drawable.grass_sprite,
             text = R.string.grass_type,
-            OnTypeClicked = {},
+            onTypeClicked = {},
             Modifier.padding(8.dp),
         )
     }
@@ -167,6 +169,7 @@ fun TypeElementPreview() {
 fun GenerationCard(
     @DrawableRes drawable: Int,
     @StringRes text: Int,
+    onGenerationClicked: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Surface(
@@ -177,7 +180,12 @@ fun GenerationCard(
         Row(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier
-                .width(255.dp),
+                .width(255.dp)
+                .clickable {
+                    // TODO: Pass the correct generation to the OnGenerationClicked lambda
+                    onGenerationClicked("generation_10")
+                },
+
         ) {
             Image(
                 painter = painterResource(drawable),
@@ -203,6 +211,7 @@ fun GenerationCardPreview() {
         GenerationCard(
             drawable = R.drawable.pokemon_red__1_,
             text = R.string.generation_1,
+            onGenerationClicked = {},
             Modifier.padding(8.dp),
         )
     }
@@ -210,7 +219,7 @@ fun GenerationCardPreview() {
 
 @Composable
 fun TypeElementRow(
-    OnTypeClicked: (String) -> Unit,
+    onTypeClicked: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     LazyRow(
@@ -232,7 +241,7 @@ fun TypeElementRow(
             TypeElement(
                 drawable = R.drawable.grass_sprite,
                 text = R.string.grass_type,
-                OnTypeClicked = OnTypeClicked,
+                onTypeClicked = onTypeClicked,
             )
         }
     }
@@ -240,6 +249,7 @@ fun TypeElementRow(
 
 @Composable
 fun GenerationCardGrid(
+    onGenerationClicked: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     LazyHorizontalGrid(
@@ -264,6 +274,7 @@ fun GenerationCardGrid(
             GenerationCard(
                 drawable = R.drawable.pokemon_red__1_,
                 text = R.string.generation_1,
+                onGenerationClicked = onGenerationClicked,
                 Modifier.height(80.dp),
             )
         }
@@ -274,7 +285,9 @@ fun GenerationCardGrid(
 @Composable
 fun GenerationCardGridPreview() {
     ApplicationTheme {
-        GenerationCardGrid()
+        GenerationCardGrid(
+            onGenerationClicked = {},
+        )
     }
 }
 
