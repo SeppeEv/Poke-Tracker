@@ -13,6 +13,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
@@ -22,12 +23,14 @@ import androidx.compose.material3.NavigationRailItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.application.screens.home.HomeScreen
 import com.example.application.ui.theme.ApplicationTheme
@@ -119,10 +122,18 @@ fun HomeSection(
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PokeTrackerAppPortrait() {
     ApplicationTheme {
         Scaffold(
+            topBar = {
+                TopAppBar(
+                    title = {
+                        Text("top app bar")
+                    },
+                )
+            },
             bottomBar = {
                 BottomNavigation()
             },
@@ -160,6 +171,20 @@ fun PokeTrackerNavigationRail(modifier: Modifier = Modifier) {
             NavigationRailItem(
                 icon = {
                     Icon(
+                        imageVector = Icons.Default.Favorite,
+                        contentDescription = null,
+                    )
+                },
+                label = {
+                    Text(stringResource(R.string.bottom_navigation_favorites))
+                },
+                selected = false,
+                onClick = {},
+            )
+            Spacer(modifier = Modifier.height(8.dp))
+            NavigationRailItem(
+                icon = {
+                    Icon(
                         imageVector = Icons.Default.AccountCircle,
                         contentDescription = null,
                     )
@@ -184,4 +209,16 @@ fun PokeTrackerAppLandscape() {
             }
         }
     }
+}
+
+@Preview
+@Composable
+fun PokeTrackerAppLandscapePreview() {
+    PokeTrackerAppLandscape()
+}
+
+@Preview
+@Composable
+fun PokeTrackerAppPortraitPreview() {
+    PokeTrackerAppPortrait()
 }

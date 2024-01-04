@@ -4,6 +4,7 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -47,28 +48,32 @@ import com.example.application.ui.theme.ApplicationTheme
 
 @Composable
 fun HomeScreen(modifier: Modifier = Modifier) {
-    // TODO: Check for landscape mode
     val image = painterResource(R.drawable.lugia_background)
 
-    Image(
-        painter = image,
-        contentDescription = null,
-        contentScale = ContentScale.Crop,
-        modifier = Modifier
-            .fillMaxSize(),
-        alpha = 0.5f,
-    )
-    Column(
+    Box(
         modifier = modifier
-            .verticalScroll(rememberScrollState()),
+            .fillMaxSize(),
     ) {
-        Spacer(Modifier.height(16.dp))
-        Searchbar(Modifier.padding(horizontal = 16.dp))
-        HomeSection(title = R.string.types) {
-            TypeElementRow() // Corrected the function name
-        }
-        HomeSection(title = R.string.generations) {
-            GenerationCardGrid()
+        Image(
+            painter = image,
+            contentDescription = null,
+            contentScale = ContentScale.Crop,
+            modifier = Modifier
+                .fillMaxSize(),
+            alpha = 0.5f,
+        )
+        Column(
+            modifier = modifier
+                .verticalScroll(rememberScrollState()),
+        ) {
+            Spacer(Modifier.height(16.dp))
+            Searchbar(Modifier.padding(horizontal = 16.dp))
+            HomeSection(title = R.string.types) {
+                TypeElementRow() // Corrected the function name
+            }
+            HomeSection(title = R.string.generations) {
+                GenerationCardGrid()
+            }
         }
     }
 }
