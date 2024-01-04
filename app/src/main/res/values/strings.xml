@@ -16,4 +16,7 @@
     <string name="height">height</string>
     <string name="weight">weight</string>
     <string name="abilities">abilities</string>
+    <string name="home">home</string>
+    <string name="favorites">favorites</string>
+    <string name="profile">profile</string>
 </resources>

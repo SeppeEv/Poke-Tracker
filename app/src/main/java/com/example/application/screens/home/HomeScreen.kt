@@ -42,7 +42,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.application.HomeSection
 import com.example.application.R
 import com.example.application.ui.theme.ApplicationTheme
 
@@ -265,5 +264,27 @@ fun GenerationCardGrid(
 fun GenerationCardGridPreview() {
     ApplicationTheme {
         GenerationCardGrid()
+    }
+}
+
+@Composable
+fun HomeSection(
+    @StringRes title: Int,
+    modifier: Modifier = Modifier,
+    content: @Composable () -> Unit,
+) {
+    Column(
+        modifier = modifier,
+    ) {
+        Column(modifier) {
+            Text(
+                text = stringResource(title),
+                style = MaterialTheme.typography.titleMedium,
+                modifier = Modifier
+                    .paddingFromBaseline(top = 40.dp, bottom = 16.dp)
+                    .padding(horizontal = 16.dp),
+            )
+            content()
+        }
     }
 }
