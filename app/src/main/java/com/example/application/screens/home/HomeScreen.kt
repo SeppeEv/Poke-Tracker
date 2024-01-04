@@ -3,6 +3,7 @@ package com.example.application.screens.home
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -46,7 +47,10 @@ import com.example.application.R
 import com.example.application.ui.theme.ApplicationTheme
 
 @Composable
-fun HomeScreen(modifier: Modifier = Modifier) {
+fun HomeScreen(
+    onTypeClicked: (String) -> Unit = {},
+    modifier: Modifier = Modifier,
+) {
     val image = painterResource(R.drawable.lugia_background)
 
     Box(
@@ -68,7 +72,7 @@ fun HomeScreen(modifier: Modifier = Modifier) {
             Spacer(Modifier.height(16.dp))
             Searchbar(Modifier.padding(horizontal = 16.dp))
             HomeSection(title = R.string.types) {
-                TypeElementRow() // Corrected the function name
+                TypeElementRow(onTypeClicked) // Corrected the function name
             }
             HomeSection(title = R.string.generations) {
                 GenerationCardGrid()
@@ -115,10 +119,14 @@ fun Searchbar(
 fun TypeElement(
     @DrawableRes drawable: Int,
     @StringRes text: Int,
+    OnTypeClicked: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
-        modifier = modifier,
+        modifier = modifier
+            .clickable {
+                OnTypeClicked("GRASS")
+            },
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -149,6 +157,7 @@ fun TypeElementPreview() {
         TypeElement(
             drawable = R.drawable.grass_sprite,
             text = R.string.grass_type,
+            OnTypeClicked = {},
             Modifier.padding(8.dp),
         )
     }
@@ -201,6 +210,7 @@ fun GenerationCardPreview() {
 
 @Composable
 fun TypeElementRow(
+    OnTypeClicked: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     LazyRow(
@@ -222,6 +232,7 @@ fun TypeElementRow(
             TypeElement(
                 drawable = R.drawable.grass_sprite,
                 text = R.string.grass_type,
+                OnTypeClicked = OnTypeClicked,
             )
         }
     }

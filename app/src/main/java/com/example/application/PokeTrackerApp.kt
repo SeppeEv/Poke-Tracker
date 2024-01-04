@@ -24,6 +24,10 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -33,12 +37,18 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.application.screens.home.HomeScreen
+import com.example.application.screens.pokemon.FavoritePokemonsScreen
+import com.example.application.screens.pokemon.PokemonDetailScreen
+import com.example.application.screens.pokemon.PokemonListScreen
+import com.example.application.screens.profile.ProfileScreen
 import com.example.application.screens.utils.PokeTrackerNavigationType
 
 enum class PokeTrackerScreen(@StringRes val title: Int, val route: String) {
     Home(R.string.home, "home"),
     Favorites(R.string.favorites, "favorites"),
     Profile(R.string.profile, "profile"),
+    Detail(R.string.detail, "detail"),
+    List(R.string.list, "list"),
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -47,6 +57,8 @@ fun PokeTrackerApp(
     navigationType: PokeTrackerNavigationType,
     navController: NavHostController = rememberNavController(),
 ) {
+    var selectedType by remember { mutableStateOf<String?>(null) }
+
     when (navigationType) {
         PokeTrackerNavigationType.BOTTOM_NAVIGATION -> {
             Scaffold(
@@ -61,21 +73,30 @@ fun PokeTrackerApp(
                     BottomNavigation()
                 },
             ) { innerPadding ->
-                // HomeScreen(Modifier.padding(padding))
-
                 NavHost(
                     navController = navController,
                     startDestination = PokeTrackerScreen.Home.route,
                     modifier = Modifier.padding(innerPadding),
                 ) {
                     composable(PokeTrackerScreen.Home.route) {
-                        HomeScreen()
+                        HomeScreen(
+                            onTypeClicked = { type ->
+                                selectedType = type
+                                navController.navigate(PokeTrackerScreen.List.route)
+                            },
+                        )
                     }
                     composable(PokeTrackerScreen.Favorites.route) {
-                        Text("Favorites")
+                        FavoritePokemonsScreen()
                     }
                     composable(PokeTrackerScreen.Profile.route) {
-                        Text("Profile")
+                        ProfileScreen()
+                    }
+                    composable(PokeTrackerScreen.Detail.route) {
+                        PokemonDetailScreen()
+                    }
+                    composable(PokeTrackerScreen.List.route) {
+                        PokemonListScreen(selectedType)
                     }
                 }
             }
@@ -101,8 +122,10 @@ fun PokeTrackerApp(
                 bottomBar = {
                     BottomNavigation()
                 },
-            ) { padding ->
-                HomeScreen(Modifier.padding(padding))
+            ) { innerPadding ->
+                HomeScreen(
+                    modifier = Modifier.padding(innerPadding),
+                )
             }
         }
     }
