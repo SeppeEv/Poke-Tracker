@@ -23,4 +23,5 @@
     <string name="pokemonByType">type</string>
     <string name="type">Type</string>
     <string name="pokemonByGeneration">generation</string>
+    <string name="back_button">back</string>
 </resources>
