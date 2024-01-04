@@ -82,6 +82,7 @@ fun PokeTrackerApp(
                         currentScreen = currentScreen,
                         canNavigateBack = navController.previousBackStackEntry != null,
                         navigateUp = { navController.navigateUp() },
+                        isStartDestination = navController.currentDestination?.route == PokeTrackerScreen.Home.route,
                     )
                 },
                 bottomBar = {
@@ -184,13 +185,14 @@ fun TopNavigation(
     currentScreen: PokeTrackerScreen,
     canNavigateBack: Boolean,
     navigateUp: () -> Unit,
+    isStartDestination: Boolean,
     modifier: Modifier = Modifier,
 ) {
     TopAppBar(
         title = { Text(stringResource(currentScreen.title)) },
         modifier = modifier,
         navigationIcon = {
-            if (canNavigateBack) {
+            if (canNavigateBack && !isStartDestination) {
                 IconButton(onClick = navigateUp) {
                     Icon(
                         imageVector = Icons.Default.ArrowBack,
