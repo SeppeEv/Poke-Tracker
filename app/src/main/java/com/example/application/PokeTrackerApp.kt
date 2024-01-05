@@ -113,11 +113,10 @@ fun PokeTrackerApp(
                     composable(PokeTrackerScreen.PokemonByGeneration.route) {
                         PokemonByGenerationScreen(
                             selectedGeneration,
-                            onSelectPokemon = { pokemon ->
-                                selectedPokemon = pokemon
-                                navController.navigate(PokeTrackerScreen.Detail.route)
-                            },
-                        )
+                        ) { pokemon ->
+                            selectedPokemon = pokemon
+                            navController.navigate(PokeTrackerScreen.Detail.route)
+                        }
                     }
                 }
             }
@@ -169,11 +168,10 @@ fun PokeTrackerApp(
                             composable(PokeTrackerScreen.PokemonByGeneration.route) {
                                 PokemonByGenerationScreen(
                                     selectedGeneration,
-                                    onSelectPokemon = { pokemon ->
-                                        selectedPokemon = pokemon
-                                        navController.navigate(PokeTrackerScreen.Detail.route)
-                                    },
-                                )
+                                ) { pokemon ->
+                                    selectedPokemon = pokemon
+                                    navController.navigate(PokeTrackerScreen.Detail.route)
+                                }
                             }
                         }
                     }
@@ -235,11 +233,10 @@ fun PokeTrackerApp(
                     composable(PokeTrackerScreen.PokemonByGeneration.route) {
                         PokemonByGenerationScreen(
                             selectedGeneration,
-                            onSelectPokemon = { pokemon ->
-                                selectedPokemon = pokemon
-                                navController.navigate(PokeTrackerScreen.Detail.route)
-                            },
-                        )
+                        ) { pokemon ->
+                            selectedPokemon = pokemon
+                            navController.navigate(PokeTrackerScreen.Detail.route)
+                        }
                     }
                 }
             }

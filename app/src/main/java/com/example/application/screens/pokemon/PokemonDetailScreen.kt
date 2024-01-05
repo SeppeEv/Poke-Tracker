@@ -10,6 +10,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -19,23 +21,30 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.application.R
 
 @Composable
 fun PokemonDetailScreen(
     selectedPokemon: String?,
+    pokemonDetailViewModel: PokemonDetailViewModel = viewModel(factory = PokemonDetailViewModel.Factory),
 ) {
+    val pokemonDetailState by pokemonDetailViewModel.uiState.collectAsState()
+
     Box(
         modifier = Modifier
             .fillMaxSize()
             .verticalScroll(rememberScrollState()),
     ) {
-        PokemonDetailCard(selectedPokemon)
+        PokemonDetailCard(selectedPokemon, pokemonDetailViewModel.getPokemonType())
     }
 }
 
 @Composable
-fun PokemonDetailCard(selectedPokemon: String?) {
+fun PokemonDetailCard(
+    selectedPokemon: String?,
+    pokemonType: String,
+) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -76,7 +85,7 @@ fun PokemonDetailCard(selectedPokemon: String?) {
                 horizontalArrangement = Arrangement.SpaceBetween,
             ) {
                 Text(
-                    text = "Grass",
+                    text = pokemonType,
                     style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold),
                 )
                 Text(
