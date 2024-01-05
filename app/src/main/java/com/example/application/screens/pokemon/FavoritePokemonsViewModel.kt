@@ -21,7 +21,7 @@ class FavoritePokemonsViewModel : ViewModel() {
 
     init {
         _uiState.value = FavoritePokemonsState(
-            pokemons = getPokemons(),
+            pokemons = _uiState.value.pokemons,
         )
     }
 

@@ -27,8 +27,8 @@ class PokemonDetailViewModel : ViewModel() {
 
     init {
         _uiState.value = PokemonDetailState(
-            pokemonName = getPokemonName(),
-            pokemonType = getPokemonType(),
+            pokemonName = _uiState.value.pokemonName,
+            pokemonType = _uiState.value.pokemonType,
         )
     }
 

@@ -36,7 +36,7 @@ fun PokemonDetailScreen(
             .fillMaxSize()
             .verticalScroll(rememberScrollState()),
     ) {
-        PokemonDetailCard(selectedPokemon, pokemonDetailViewModel.getPokemonType())
+        PokemonDetailCard(selectedPokemon, pokemonDetailState.pokemonType)
     }
 }
 

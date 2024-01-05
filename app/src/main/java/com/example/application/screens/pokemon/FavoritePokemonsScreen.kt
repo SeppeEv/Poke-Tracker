@@ -1,5 +1,6 @@
 package com.example.application.screens.pokemon
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -12,9 +13,11 @@ fun FavoritePokemonsScreen(
 ) {
     val favoritePokemonsState = favoritePokemonsViewModel.uiState.collectAsState()
 
-    Text(text = "Favorite Pokemons Screen")
-    for (pokemon in favoritePokemonsViewModel.getPokemons()) {
-        Text(text = pokemon)
+    Column {
+        Text(text = "Favorite Pokemons Screen")
+        for (pokemon in favoritePokemonsState.value.pokemons) {
+            Text(text = pokemon)
+        }
     }
 }
 

@@ -103,7 +103,7 @@ fun PokeTrackerApp(
                     }
                     composable(PokeTrackerScreen.PokemonByType.route) {
                         PokemonByTypeScreen(
-                            selectedType,
+                            selectedType = selectedType,
                             onSelectPokemon = { pokemon ->
                                 selectedPokemon = pokemon
                                 navController.navigate(PokeTrackerScreen.Detail.route)
@@ -112,7 +112,7 @@ fun PokeTrackerApp(
                     }
                     composable(PokeTrackerScreen.PokemonByGeneration.route) {
                         PokemonByGenerationScreen(
-                            selectedGeneration,
+                            generation = selectedGeneration,
                         ) { pokemon ->
                             selectedPokemon = pokemon
                             navController.navigate(PokeTrackerScreen.Detail.route)
@@ -158,7 +158,7 @@ fun PokeTrackerApp(
                             }
                             composable(PokeTrackerScreen.PokemonByType.route) {
                                 PokemonByTypeScreen(
-                                    selectedType,
+                                    selectedType = selectedType,
                                     onSelectPokemon = { pokemon ->
                                         selectedPokemon = pokemon
                                         navController.navigate(PokeTrackerScreen.Detail.route)
@@ -167,7 +167,7 @@ fun PokeTrackerApp(
                             }
                             composable(PokeTrackerScreen.PokemonByGeneration.route) {
                                 PokemonByGenerationScreen(
-                                    selectedGeneration,
+                                    generation = selectedGeneration,
                                 ) { pokemon ->
                                     selectedPokemon = pokemon
                                     navController.navigate(PokeTrackerScreen.Detail.route)
@@ -223,7 +223,7 @@ fun PokeTrackerApp(
                     }
                     composable(PokeTrackerScreen.PokemonByType.route) {
                         PokemonByTypeScreen(
-                            selectedType,
+                            selectedType = selectedType,
                             onSelectPokemon = { pokemon ->
                                 selectedPokemon = pokemon
                                 navController.navigate(PokeTrackerScreen.Detail.route)
@@ -232,7 +232,7 @@ fun PokeTrackerApp(
                     }
                     composable(PokeTrackerScreen.PokemonByGeneration.route) {
                         PokemonByGenerationScreen(
-                            selectedGeneration,
+                            generation = selectedGeneration,
                         ) { pokemon ->
                             selectedPokemon = pokemon
                             navController.navigate(PokeTrackerScreen.Detail.route)
