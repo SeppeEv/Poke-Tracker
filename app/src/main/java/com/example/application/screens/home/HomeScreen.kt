@@ -39,6 +39,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -125,6 +126,7 @@ fun TypeElement(
 ) {
     Column(
         modifier = modifier
+            .testTag("TypeElement")
             .clickable {
                 // TODO: Pass the correct type to the OnTypeClicked lambda
                 onTypeClicked("GRASS")
@@ -175,7 +177,8 @@ fun GenerationCard(
     Surface(
         shape = MaterialTheme.shapes.medium,
         color = MaterialTheme.colorScheme.surface,
-        modifier = modifier,
+        modifier = modifier
+            .testTag("GenerationCard"),
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
