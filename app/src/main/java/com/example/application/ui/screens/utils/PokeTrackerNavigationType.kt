@@ -1,4 +1,4 @@
-package com.example.application.screens.utils
+package com.example.application.ui.screens.utils
 
 enum class PokeTrackerNavigationType {
     /**

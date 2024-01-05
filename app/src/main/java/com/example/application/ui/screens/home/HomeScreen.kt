@@ -1,4 +1,4 @@
-package com.example.application.screens.home
+package com.example.application.ui.screens.home
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes

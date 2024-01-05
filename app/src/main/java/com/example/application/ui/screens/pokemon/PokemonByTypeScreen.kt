@@ -1,6 +1,7 @@
-package com.example.application.screens.pokemon
+package com.example.application.ui.screens.pokemon
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -13,25 +14,27 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.application.R
 
 @Composable
-fun PokemonByGenerationScreen(
-    pokemonByGenerationViewModel: PokemonByGenerationViewModel = viewModel(factory = PokemonByGenerationViewModel.Factory),
-    generation: String? = "Generation 1",
+fun PokemonByTypeScreen(
+    pokemomByTypeViewModel: PokemonByTypeViewModel = viewModel(factory = PokemonByTypeViewModel.Factory),
+    selectedType: String?,
     onSelectPokemon: (String) -> Unit,
 ) {
-    val pokemonByGenerationState = pokemonByGenerationViewModel.uiState.collectAsState()
+    val pokemonByTypeState = pokemomByTypeViewModel.uiState.collectAsState()
 
     Surface(
         color = MaterialTheme.colorScheme.background,
         modifier = Modifier
+            .fillMaxSize()
             .padding(dimensionResource(id = R.dimen.padding_medium)),
     ) {
         Column(
             modifier = Modifier
-                .padding(dimensionResource(id = R.dimen.padding_medium)),
+                .padding(dimensionResource(id = R.dimen.padding_medium))
+                .fillMaxSize(),
         ) {
-            if (generation != null) {
+            if (selectedType != null) {
                 Text(
-                    text = generation,
+                    text = selectedType,
                     style = MaterialTheme.typography.headlineMedium,
                 )
             }

@@ -1,4 +1,4 @@
-package com.example.application.screens.pokemon
+package com.example.application.ui.screens.pokemon
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
@@ -25,7 +25,6 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import com.example.application.R
 import com.example.application.ui.theme.ApplicationTheme
 

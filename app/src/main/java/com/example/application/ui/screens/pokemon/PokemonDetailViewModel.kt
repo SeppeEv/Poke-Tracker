@@ -1,6 +1,5 @@
-package com.example.application.screens.pokemon
+package com.example.application.ui.screens.pokemon
 
-import android.text.Spannable.Factory
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.initializer

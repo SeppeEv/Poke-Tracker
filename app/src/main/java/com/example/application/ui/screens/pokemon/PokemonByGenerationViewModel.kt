@@ -1,4 +1,4 @@
-package com.example.application.screens.pokemon
+package com.example.application.ui.screens.pokemon
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -8,10 +8,10 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
-class FavoritePokemonsViewModel : ViewModel() {
+class PokemonByGenerationViewModel : ViewModel() {
 
-    private val _uiState = MutableStateFlow(FavoritePokemonsState())
-    val uiState: StateFlow<FavoritePokemonsState> = _uiState.asStateFlow()
+    private val _uiState = MutableStateFlow(PokemonByGenerationState())
+    val uiState: StateFlow<PokemonByGenerationState> = _uiState.asStateFlow()
 
     private var pokemons: List<String> = listOf()
 
@@ -20,15 +20,13 @@ class FavoritePokemonsViewModel : ViewModel() {
     }
 
     init {
-        _uiState.value = FavoritePokemonsState(
-            pokemons = _uiState.value.pokemons,
-        )
+        pokemons = getPokemons()
     }
 
     companion object {
         val Factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {
-                FavoritePokemonsViewModel()
+                PokemonByGenerationViewModel()
             }
         }
     }

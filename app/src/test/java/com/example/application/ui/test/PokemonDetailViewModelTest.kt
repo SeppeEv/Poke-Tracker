@@ -1,6 +1,6 @@
 package com.example.application.ui.test
 
-import com.example.application.screens.pokemon.PokemonDetailViewModel
+import com.example.application.ui.screens.pokemon.PokemonDetailViewModel
 import org.junit.Test
 
 class PokemonDetailViewModelTest {

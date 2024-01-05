@@ -1,4 +1,4 @@
-package com.example.application.screens.pokemon
+package com.example.application.ui.screens.pokemon
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.* // ktlint-disable no-wildcard-imports

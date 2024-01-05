@@ -23,13 +23,13 @@ import androidx.navigation.compose.rememberNavController
 import com.example.application.navigation.BottomNavigation
 import com.example.application.navigation.PokeTrackerNavigationRail
 import com.example.application.navigation.TopNavigation
-import com.example.application.screens.home.HomeScreen
-import com.example.application.screens.pokemon.FavoritePokemonsScreen
-import com.example.application.screens.pokemon.PokemonByGenerationScreen
-import com.example.application.screens.pokemon.PokemonByTypeScreen
-import com.example.application.screens.pokemon.PokemonDetailScreen
-import com.example.application.screens.profile.ProfileScreen
-import com.example.application.screens.utils.PokeTrackerNavigationType
+import com.example.application.ui.screens.home.HomeScreen
+import com.example.application.ui.screens.pokemon.FavoritePokemonsScreen
+import com.example.application.ui.screens.pokemon.PokemonByGenerationScreen
+import com.example.application.ui.screens.pokemon.PokemonByTypeScreen
+import com.example.application.ui.screens.pokemon.PokemonDetailScreen
+import com.example.application.ui.screens.profile.ProfileScreen
+import com.example.application.ui.screens.utils.PokeTrackerNavigationType
 
 enum class PokeTrackerScreen(@StringRes val title: Int, val route: String) {
     Home(R.string.home, "home"),
