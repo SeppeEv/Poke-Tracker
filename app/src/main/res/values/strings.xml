@@ -24,4 +24,6 @@
     <string name="type">Type</string>
     <string name="pokemonByGeneration">generation</string>
     <string name="back_button">back</string>
+    <string name="loading">loading ...</string>
+    <string name="loading_failed">Loading failed</string>
 </resources>

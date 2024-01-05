@@ -6,6 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
+import com.example.application.ui.PokeTrackerApp
 import com.example.application.ui.screens.utils.PokeTrackerNavigationType
 import com.example.application.ui.theme.ApplicationTheme
 

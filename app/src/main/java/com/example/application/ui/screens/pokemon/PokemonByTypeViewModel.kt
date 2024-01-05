@@ -1,27 +1,45 @@
 package com.example.application.ui.screens.pokemon
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import com.example.application.network.PokeTrackerApi
+import kotlinx.coroutines.launch
+import retrofit2.HttpException
+import java.io.IOException
+
+sealed interface PokeTrackerUiState {
+    data class Success(val pokemons: String) : PokeTrackerUiState
+    object Error : PokeTrackerUiState
+    object Loading : PokeTrackerUiState
+}
 
 class PokemonByTypeViewModel : ViewModel() {
-    private val _uiState = MutableStateFlow(PokemonByTypeState())
-    val uiState: StateFlow<PokemonByTypeState> = _uiState.asStateFlow()
-
-    private var pokemons: List<String> = listOf()
-
-    fun getPokemons(): List<String> {
-        return pokemons
+    var pokeTrackerUiState: PokeTrackerUiState by mutableStateOf(PokeTrackerUiState.Loading)
+        private set
+    init {
+        getPokemons()
     }
 
-    init {
-        _uiState.value = PokemonByTypeState(
-            pokemons = getPokemons(),
-        )
+    fun getPokemons() {
+        viewModelScope.launch {
+            pokeTrackerUiState = PokeTrackerUiState.Loading
+            pokeTrackerUiState = try {
+                val listResult = PokeTrackerApi.retrofitService.getPokemons()
+                PokeTrackerUiState.Success(
+                    "Success: ${listResult.results.size} Pokemons retrieved",
+                )
+            } catch (e: IOException) {
+                PokeTrackerUiState.Error
+            } catch (e: HttpException) {
+                PokeTrackerUiState.Error
+            }
+        }
     }
 
     companion object {

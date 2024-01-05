@@ -8,6 +8,8 @@ import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
 import androidx.navigation.compose.ComposeNavigator
 import androidx.navigation.testing.TestNavHostController
+import com.example.application.ui.PokeTrackerApp
+import com.example.application.ui.PokeTrackerScreen
 import com.example.application.ui.screens.utils.PokeTrackerNavigationType
 import org.junit.Before
 import org.junit.Rule

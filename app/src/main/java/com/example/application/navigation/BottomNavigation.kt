@@ -12,7 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavDestination
-import com.example.application.PokeTrackerScreen
+import com.example.application.ui.PokeTrackerScreen
 import com.example.application.R
 
 @Composable

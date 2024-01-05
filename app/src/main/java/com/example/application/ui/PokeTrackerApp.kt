@@ -1,4 +1,4 @@
-package com.example.application
+package com.example.application.ui
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Row
@@ -15,11 +15,13 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.example.application.R
 import com.example.application.navigation.BottomNavigation
 import com.example.application.navigation.PokeTrackerNavigationRail
 import com.example.application.navigation.TopNavigation
@@ -27,6 +29,7 @@ import com.example.application.ui.screens.home.HomeScreen
 import com.example.application.ui.screens.pokemon.FavoritePokemonsScreen
 import com.example.application.ui.screens.pokemon.PokemonByGenerationScreen
 import com.example.application.ui.screens.pokemon.PokemonByTypeScreen
+import com.example.application.ui.screens.pokemon.PokemonByTypeViewModel
 import com.example.application.ui.screens.pokemon.PokemonDetailScreen
 import com.example.application.ui.screens.profile.ProfileScreen
 import com.example.application.ui.screens.utils.PokeTrackerNavigationType
@@ -102,13 +105,14 @@ fun PokeTrackerApp(
                         PokemonDetailScreen(selectedPokemon)
                     }
                     composable(PokeTrackerScreen.PokemonByType.route) {
+                        val pokemonByTypeViewModel: PokemonByTypeViewModel = viewModel()
                         PokemonByTypeScreen(
+                            pokeTrackerUiState = pokemonByTypeViewModel.pokeTrackerUiState,
                             selectedType = selectedType,
-                            onSelectPokemon = { pokemon ->
-                                selectedPokemon = pokemon
-                                navController.navigate(PokeTrackerScreen.Detail.route)
-                            },
-                        )
+                        ) { pokemon ->
+                            selectedPokemon = pokemon
+                            navController.navigate(PokeTrackerScreen.Detail.route)
+                        }
                     }
                     composable(PokeTrackerScreen.PokemonByGeneration.route) {
                         PokemonByGenerationScreen(
@@ -157,13 +161,14 @@ fun PokeTrackerApp(
                                 PokemonDetailScreen(selectedPokemon)
                             }
                             composable(PokeTrackerScreen.PokemonByType.route) {
+                                val pokemonByTypeViewModel: PokemonByTypeViewModel = viewModel()
                                 PokemonByTypeScreen(
+                                    pokeTrackerUiState = pokemonByTypeViewModel.pokeTrackerUiState,
                                     selectedType = selectedType,
-                                    onSelectPokemon = { pokemon ->
-                                        selectedPokemon = pokemon
-                                        navController.navigate(PokeTrackerScreen.Detail.route)
-                                    },
-                                )
+                                ) { pokemon ->
+                                    selectedPokemon = pokemon
+                                    navController.navigate(PokeTrackerScreen.Detail.route)
+                                }
                             }
                             composable(PokeTrackerScreen.PokemonByGeneration.route) {
                                 PokemonByGenerationScreen(
@@ -222,13 +227,14 @@ fun PokeTrackerApp(
                         PokemonDetailScreen(selectedPokemon)
                     }
                     composable(PokeTrackerScreen.PokemonByType.route) {
+                        val pokemonByTypeViewModel: PokemonByTypeViewModel = viewModel()
                         PokemonByTypeScreen(
+                            pokeTrackerUiState = pokemonByTypeViewModel.pokeTrackerUiState,
                             selectedType = selectedType,
-                            onSelectPokemon = { pokemon ->
-                                selectedPokemon = pokemon
-                                navController.navigate(PokeTrackerScreen.Detail.route)
-                            },
-                        )
+                        ) { pokemon ->
+                            selectedPokemon = pokemon
+                            navController.navigate(PokeTrackerScreen.Detail.route)
+                        }
                     }
                     composable(PokeTrackerScreen.PokemonByGeneration.route) {
                         PokemonByGenerationScreen(
