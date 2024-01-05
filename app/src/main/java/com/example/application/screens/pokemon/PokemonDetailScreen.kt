@@ -16,11 +16,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.application.R
 
@@ -48,18 +48,18 @@ fun PokemonDetailCard(
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(16.dp),
-        shape = RoundedCornerShape(16.dp),
+            .padding(dimensionResource(id = R.dimen.padding_medium)),
+        shape = RoundedCornerShape(dimensionResource(id = R.dimen.pokemon_detail_card_corner_radius)),
     ) {
         Column(
             modifier = Modifier
-                .padding(16.dp)
+                .padding(dimensionResource(id = R.dimen.padding_medium))
                 .fillMaxWidth(),
         ) {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(bottom = 8.dp),
+                    .padding(bottom = dimensionResource(id = R.dimen.padding_small)),
                 horizontalArrangement = Arrangement.SpaceBetween,
             ) {
                 Text(
@@ -76,10 +76,10 @@ fun PokemonDetailCard(
                 contentDescription = stringResource(R.string.bulbasaur),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .clip(shape = RoundedCornerShape(8.dp)),
+                    .clip(shape = RoundedCornerShape(dimensionResource(id = R.dimen.pokemon_detail_image_corner_radius))),
                 contentScale = ContentScale.Crop,
             )
-            Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.padding_small)))
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -93,7 +93,7 @@ fun PokemonDetailCard(
                     style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold),
                 )
             }
-            Spacer(modifier = Modifier.height(4.dp))
+            Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.spacer_ultra_small)))
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -105,7 +105,7 @@ fun PokemonDetailCard(
                 StatusColumn("Sp. Def", "65")
                 StatusColumn("Speed", "45")
             }
-            Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.spacer_small)))
             Text(
                 text = stringResource(R.string.height) + ": " + "2'04\"",
                 style = MaterialTheme.typography.bodyMedium,
@@ -114,7 +114,7 @@ fun PokemonDetailCard(
                 text = stringResource(R.string.weight) + ": " + "15.2 lbs",
                 style = MaterialTheme.typography.bodyMedium,
             )
-            Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.spacer_small)))
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically,

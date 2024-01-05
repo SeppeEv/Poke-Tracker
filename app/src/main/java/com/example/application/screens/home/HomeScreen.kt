@@ -3,6 +3,7 @@ package com.example.application.screens.home
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -40,6 +41,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -71,8 +73,8 @@ fun HomeScreen(
             modifier = modifier
                 .verticalScroll(rememberScrollState()),
         ) {
-            Spacer(Modifier.height(16.dp))
-            Searchbar(Modifier.padding(horizontal = 16.dp))
+            Spacer(Modifier.height(dimensionResource(id = R.dimen.spacer_medium)))
+            Searchbar(Modifier.padding(horizontal = dimensionResource(id = R.dimen.padding_medium)))
             HomeSection(title = R.string.types) {
                 TypeElementRow(onTypeClicked)
             }
@@ -142,6 +144,7 @@ fun TypeElement(
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
                     .size(88.dp)
+                    .background(MaterialTheme.colorScheme.surfaceVariant)
                     .clip(CircleShape),
             )
             Text(
@@ -162,7 +165,8 @@ fun TypeElementPreview() {
             drawable = R.drawable.grass_sprite,
             text = R.string.grass_type,
             onTypeClicked = {},
-            Modifier.padding(8.dp),
+            Modifier
+                .padding(dimensionResource(id = R.dimen.padding_small)),
         )
     }
 }
@@ -201,7 +205,7 @@ fun GenerationCard(
                 text = stringResource(text),
                 style = MaterialTheme.typography.titleMedium,
                 modifier = Modifier
-                    .padding(16.dp),
+                    .padding(dimensionResource(id = R.dimen.padding_medium)),
             )
         }
     }
@@ -215,7 +219,7 @@ fun GenerationCardPreview() {
             drawable = R.drawable.pokemon_red__1_,
             text = R.string.generation_1,
             onGenerationClicked = {},
-            Modifier.padding(8.dp),
+            Modifier.padding(dimensionResource(id = R.dimen.padding_small)),
         )
     }
 }
@@ -226,8 +230,8 @@ fun TypeElementRow(
     modifier: Modifier = Modifier,
 ) {
     LazyRow(
-        horizontalArrangement = Arrangement.spacedBy(8.dp),
-        contentPadding = PaddingValues(horizontal = 16.dp),
+        horizontalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.spacer_small)),
+        contentPadding = PaddingValues(horizontal = dimensionResource(id = R.dimen.padding_medium)),
         modifier = modifier,
     ) {
         val typesData = listOf(
@@ -257,11 +261,11 @@ fun GenerationCardGrid(
 ) {
     LazyHorizontalGrid(
         rows = GridCells.Fixed(3),
-        contentPadding = PaddingValues(horizontal = 16.dp),
-        horizontalArrangement = Arrangement.spacedBy(16.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp),
+        contentPadding = PaddingValues(horizontal = dimensionResource(id = R.dimen.padding_medium)),
+        horizontalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.spacer_medium)),
+        verticalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.spacer_medium)),
         modifier = modifier
-            .height(240.dp),
+            .height(dimensionResource(id = R.dimen.generations_grid_height)),
     ) {
         val generationsData = listOf(
             "generation_1",
@@ -278,7 +282,7 @@ fun GenerationCardGrid(
                 drawable = R.drawable.pokemon_red__1_,
                 text = R.string.generation_1,
                 onGenerationClicked = onGenerationClicked,
-                Modifier.height(80.dp),
+                Modifier.height(dimensionResource(id = R.dimen.generations_card_height)),
             )
         }
     }
@@ -308,8 +312,11 @@ fun HomeSection(
                 text = stringResource(title),
                 style = MaterialTheme.typography.titleMedium,
                 modifier = Modifier
-                    .paddingFromBaseline(top = 40.dp, bottom = 16.dp)
-                    .padding(horizontal = 16.dp),
+                    .paddingFromBaseline(
+                        top = dimensionResource(id = R.dimen.padding_top_homesection),
+                        bottom = dimensionResource(id = R.dimen.padding_medium)
+                    )
+                    .padding(horizontal = dimensionResource(id = R.dimen.padding_medium)),
             )
             content()
         }

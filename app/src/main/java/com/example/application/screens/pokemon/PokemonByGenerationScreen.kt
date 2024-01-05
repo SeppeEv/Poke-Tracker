@@ -8,8 +8,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.res.dimensionResource
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.application.R
 
 @Composable
 fun PokemonByGenerationScreen(
@@ -22,11 +23,11 @@ fun PokemonByGenerationScreen(
     Surface(
         color = MaterialTheme.colorScheme.background,
         modifier = Modifier
-            .padding(16.dp),
+            .padding(dimensionResource(id = R.dimen.padding_medium)),
     ) {
         Column(
             modifier = Modifier
-                .padding(16.dp),
+                .padding(dimensionResource(id = R.dimen.padding_medium)),
         ) {
             if (generation != null) {
                 Text(
@@ -37,7 +38,7 @@ fun PokemonByGenerationScreen(
             PokemonListGrid(
                 onSelectPokemon,
                 modifier = Modifier
-                    .padding(top = 16.dp),
+                    .padding(top = dimensionResource(id = R.dimen.padding_medium)),
             )
         }
     }

@@ -21,6 +21,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -37,13 +38,13 @@ fun PokemonCard(
 ) {
     Surface(
         shape = MaterialTheme.shapes.medium,
-        color = MaterialTheme.colorScheme.surface,
+        color = MaterialTheme.colorScheme.surfaceVariant,
         modifier = modifier,
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
-                .width(60.dp)
+                .width(dimensionResource(id = R.dimen.pokemon_card_width))
                 .clickable {
                     onSelectPokemon("Charizard")
                 },
@@ -53,13 +54,13 @@ fun PokemonCard(
                 contentDescription = null,
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
-                    .size(60.dp),
+                    .size(dimensionResource(id = R.dimen.pokemon_card_image_size)),
             )
             Text(
                 text = stringResource(text),
                 style = MaterialTheme.typography.bodySmall,
                 modifier = Modifier
-                    .padding(8.dp),
+                    .padding(top = dimensionResource(id = R.dimen.padding_small)),
             )
         }
     }
@@ -72,9 +73,9 @@ fun PokemonListGrid(
 ) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(3),
-        contentPadding = PaddingValues(vertical = 16.dp),
-        horizontalArrangement = Arrangement.spacedBy(8.dp),
-        verticalArrangement = Arrangement.spacedBy(8.dp),
+        contentPadding = PaddingValues(vertical = dimensionResource(id = R.dimen.padding_medium)),
+        horizontalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.spacer_small)),
+        verticalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.spacer_small)),
         modifier = modifier
             .fillMaxWidth(),
     ) {
@@ -84,7 +85,7 @@ fun PokemonListGrid(
                 text = R.string.bulbasaur,
                 onSelectPokemon,
                 Modifier
-                    .padding(8.dp)
+                    .padding(dimensionResource(id = R.dimen.padding_small))
                     .testTag("PokemonCard"),
             )
         }
