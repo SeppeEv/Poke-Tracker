@@ -37,27 +37,39 @@ fun ErrorScreen(modifier: Modifier = Modifier) {
 
 @Composable
 fun PokemonByTypeScreen(
-    pokeTrackerUiState: PokeTrackerUiState,
+    /*pokeTrackerUiState: PokeUiState,*/
+    pokemonUiStateTest: PokeUiStateTest,
     selectedType: String?,
     onSelectPokemon: (String) -> Unit,
 ) {
-    when (pokeTrackerUiState) {
-        is PokeTrackerUiState.Loading -> { LoadingScreen(modifier = Modifier.fillMaxSize()) }
-        is PokeTrackerUiState.Success -> PokemonByTypeContent(
-            pokeTrackerUiState.pokemons,
+    when (pokemonUiStateTest) {
+        is PokeUiStateTest.Loading -> LoadingScreen(modifier = Modifier.fillMaxSize())
+        is PokeUiStateTest.Success -> PokemonByTypeContent(
+            pokemonUiStateTest.pokemon,
             selectedType,
             onSelectPokemon,
             modifier = Modifier.fillMaxSize(),
         )
 
-        is PokeTrackerUiState.Error -> { ErrorScreen(modifier = Modifier.fillMaxSize())
-        }
+        is PokeUiStateTest.Error -> ErrorScreen(modifier = Modifier.fillMaxSize())
     }
+    /*when (pokeTrackerUiState) {
+        is PokeUiState.Loading -> { LoadingScreen(modifier = Modifier.fillMaxSize()) }
+        is PokeUiState.Success -> PokemonByTypeContent(
+            pokeTrackerUiState.pokemon,
+            selectedType,
+            onSelectPokemon,
+            modifier = Modifier.fillMaxSize(),
+        )
+
+        is PokeUiState.Error -> { ErrorScreen(modifier = Modifier.fillMaxSize())
+        }
+    }*/
 }
 
 @Composable
 fun PokemonByTypeContent(
-    pokemons: String,
+    pokemon: String,
     selectedType: String?,
     onSelectPokemon: (String) -> Unit,
     modifier: Modifier,
@@ -74,7 +86,7 @@ fun PokemonByTypeContent(
                 .fillMaxSize(),
         ) {
             Text(text = "test")
-            Text(text = pokemons, modifier = modifier)
+            Text(text = pokemon, modifier = modifier)
             if (selectedType != null) {
                 Text(
                     text = selectedType,

@@ -107,7 +107,8 @@ fun PokeTrackerApp(
                     composable(PokeTrackerScreen.PokemonByType.route) {
                         val pokemonByTypeViewModel: PokemonByTypeViewModel = viewModel()
                         PokemonByTypeScreen(
-                            pokeTrackerUiState = pokemonByTypeViewModel.pokeTrackerUiState,
+                            /*pokeTrackerUiState = pokemonByTypeViewModel.pokeTrackerUiState,*/
+                            pokemonUiStateTest = pokemonByTypeViewModel.pokeUiStateTest,
                             selectedType = selectedType,
                         ) { pokemon ->
                             selectedPokemon = pokemon
@@ -163,7 +164,8 @@ fun PokeTrackerApp(
                             composable(PokeTrackerScreen.PokemonByType.route) {
                                 val pokemonByTypeViewModel: PokemonByTypeViewModel = viewModel()
                                 PokemonByTypeScreen(
-                                    pokeTrackerUiState = pokemonByTypeViewModel.pokeTrackerUiState,
+                                    /*pokeTrackerUiState = pokemonByTypeViewModel.pokeTrackerUiState,*/
+                                    pokemonUiStateTest = pokemonByTypeViewModel.pokeUiStateTest,
                                     selectedType = selectedType,
                                 ) { pokemon ->
                                     selectedPokemon = pokemon
@@ -229,7 +231,8 @@ fun PokeTrackerApp(
                     composable(PokeTrackerScreen.PokemonByType.route) {
                         val pokemonByTypeViewModel: PokemonByTypeViewModel = viewModel()
                         PokemonByTypeScreen(
-                            pokeTrackerUiState = pokemonByTypeViewModel.pokeTrackerUiState,
+                            /*pokeTrackerUiState = pokemonByTypeViewModel.pokeTrackerUiState,*/
+                            pokemonUiStateTest = pokemonByTypeViewModel.pokeUiStateTest,
                             selectedType = selectedType,
                         ) { pokemon ->
                             selectedPokemon = pokemon
