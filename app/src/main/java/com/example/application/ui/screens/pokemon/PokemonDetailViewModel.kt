@@ -1,40 +1,38 @@
 package com.example.application.ui.screens.pokemon
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewmodel.initializer
-import androidx.lifecycle.viewmodel.viewModelFactory
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import androidx.lifecycle.viewModelScope
+import com.example.application.model.PokemonResponse
+import com.example.application.network.PokeApi
+import kotlinx.coroutines.launch
+
+sealed interface PokemonDetailUiState {
+    data class Success(val pokemon: PokemonResponse) : PokemonDetailUiState
+    object Error : PokemonDetailUiState
+    object Loading : PokemonDetailUiState
+}
 
 class PokemonDetailViewModel : ViewModel() {
-
-    private val _uiState = MutableStateFlow(PokemonDetailState())
-    val uiState: StateFlow<PokemonDetailState> = _uiState.asStateFlow()
-
-    private var pokemonName: String = ""
-    private var pokemonType: String = ""
-
-    fun getPokemonName(): String {
-        return pokemonName
-    }
-
-    fun getPokemonType(): String {
-        return pokemonType
-    }
+    var pokemonDetailUiState: PokemonDetailUiState by mutableStateOf(PokemonDetailUiState.Loading)
+        private set
 
     init {
-        _uiState.value = PokemonDetailState(
-            pokemonName = _uiState.value.pokemonName,
-            pokemonType = _uiState.value.pokemonType,
-        )
+        getPokemonDetail()
     }
 
-    companion object {
-        val Factory: ViewModelProvider.Factory = viewModelFactory {
-            initializer {
-                PokemonDetailViewModel()
+    private fun getPokemonDetail() {
+        viewModelScope.launch {
+            pokemonDetailUiState = PokemonDetailUiState.Loading
+            pokemonDetailUiState = try {
+                val pokemon = PokeApi.retrofitService.getPokemonByName("mew")
+                PokemonDetailUiState.Success(
+                    pokemon = pokemon
+                )
+            } catch (e: Exception) {
+                PokeUiState.Error
             }
         }
     }

@@ -14,7 +14,7 @@ import java.io.IOException
 
 sealed interface PokeUiState {
     data class Success(val pokemon: String) : PokeUiState
-    object Error : PokeUiState
+    object Error : PokeUiState, PokemonDetailUiState
     object Loading : PokeUiState
 }
 

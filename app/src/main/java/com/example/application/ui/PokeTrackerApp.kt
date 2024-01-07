@@ -33,6 +33,7 @@ import com.example.application.ui.screens.pokemon.PokemonByGenerationViewModel
 import com.example.application.ui.screens.pokemon.PokemonByTypeScreen
 import com.example.application.ui.screens.pokemon.PokemonByTypeViewModel
 import com.example.application.ui.screens.pokemon.PokemonDetailScreen
+import com.example.application.ui.screens.pokemon.PokemonDetailViewModel
 import com.example.application.ui.screens.profile.ProfileScreen
 import com.example.application.ui.screens.utils.PokeTrackerNavigationType
 
@@ -106,7 +107,9 @@ fun PokeTrackerApp(
                         ProfileScreen()
                     }
                     composable(PokeTrackerScreen.Detail.route) {
-                        PokemonDetailScreen(selectedPokemon)
+                        val pokemonDetailViewModel: PokemonDetailViewModel = viewModel()
+                        PokemonDetailScreen(
+                            pokemonDetailUiState = pokemonDetailViewModel.pokemonDetailUiState,)
                     }
                     composable(PokeTrackerScreen.PokemonByType.route) {
                         val pokemonByTypeViewModel: PokemonByTypeViewModel = viewModel()
@@ -166,7 +169,9 @@ fun PokeTrackerApp(
                                 ProfileScreen()
                             }
                             composable(PokeTrackerScreen.Detail.route) {
-                                PokemonDetailScreen(selectedPokemon)
+                                val pokemonDetailViewModel: PokemonDetailViewModel = viewModel()
+                                PokemonDetailScreen(
+                                    pokemonDetailUiState = pokemonDetailViewModel.pokemonDetailUiState,)
                             }
                             composable(PokeTrackerScreen.PokemonByType.route) {
                                 val pokemonByTypeViewModel: PokemonByTypeViewModel = viewModel()
@@ -236,7 +241,9 @@ fun PokeTrackerApp(
                         ProfileScreen()
                     }
                     composable(PokeTrackerScreen.Detail.route) {
-                        PokemonDetailScreen(selectedPokemon)
+                        val pokemonDetailViewModel: PokemonDetailViewModel = viewModel()
+                        PokemonDetailScreen(
+                            pokemonDetailUiState = pokemonDetailViewModel.pokemonDetailUiState,)
                     }
                     composable(PokeTrackerScreen.PokemonByType.route) {
                         val pokemonByTypeViewModel: PokemonByTypeViewModel = viewModel()
