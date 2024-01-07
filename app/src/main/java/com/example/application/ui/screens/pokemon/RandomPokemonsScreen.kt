@@ -33,6 +33,7 @@ fun RandomPokemonsScreen(
                         PokemonDetailCard(
                             pokemon = randomPokemonUiState.pokemon,
                             pokemonType = "TYPE",
+
                         )
                     }
                 }

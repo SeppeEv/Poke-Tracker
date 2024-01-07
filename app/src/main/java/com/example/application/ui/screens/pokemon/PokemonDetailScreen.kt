@@ -22,6 +22,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import com.example.application.R
 import com.example.application.model.PokemonResponse
@@ -93,9 +94,10 @@ fun PokemonDetailCard(
             }
             Image(
                 painter = rememberAsyncImagePainter(model = pokemon.sprites.frontDefault),
-                contentDescription = stringResource(R.string.bulbasaur),
+                contentDescription = null,
                 modifier = Modifier
                     .fillMaxWidth()
+                    .height(200.dp)
                     .clip(shape = RoundedCornerShape(dimensionResource(id = R.dimen.pokemon_detail_image_corner_radius))),
                 contentScale = ContentScale.Crop,
             )
