@@ -6,7 +6,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.application.model.GenerationsResponse
-import com.example.application.model.PokemonTypeResponse
+import com.example.application.model.PokemonTypesResponse
 import com.example.application.network.PokeApi
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
@@ -14,7 +14,7 @@ import java.io.IOException
 
 
 sealed interface HomeUiState {
-    data class Success(val generations: GenerationsResponse, val types: PokemonTypeResponse) : HomeUiState
+    data class Success(val generations: GenerationsResponse, val types: PokemonTypesResponse) : HomeUiState
     object Error : HomeUiState
     object Loading : HomeUiState
 }

@@ -114,9 +114,7 @@ fun PokeTrackerApp(
                     composable(PokeTrackerScreen.PokemonByType.route) {
                         val pokemonByTypeViewModel: PokemonByTypeViewModel = viewModel()
                         PokemonByTypeScreen(
-                            /*pokeTrackerUiState = pokemonByTypeViewModel.pokeTrackerUiState,*/
-                            pokeUiState = pokemonByTypeViewModel.pokeUiStateTest,
-                            selectedType = selectedType,
+                            typeUiState = pokemonByTypeViewModel.typeUiState,
                         ) { pokemon ->
                             selectedPokemon = pokemon
                             navController.navigate(PokeTrackerScreen.Detail.route)
@@ -176,9 +174,7 @@ fun PokeTrackerApp(
                             composable(PokeTrackerScreen.PokemonByType.route) {
                                 val pokemonByTypeViewModel: PokemonByTypeViewModel = viewModel()
                                 PokemonByTypeScreen(
-                                    /*pokeTrackerUiState = pokemonByTypeViewModel.pokeTrackerUiState,*/
-                                    pokeUiState = pokemonByTypeViewModel.pokeUiStateTest,
-                                    selectedType = selectedType,
+                                    typeUiState = pokemonByTypeViewModel.typeUiState,
                                 ) { pokemon ->
                                     selectedPokemon = pokemon
                                     navController.navigate(PokeTrackerScreen.Detail.route)
@@ -248,9 +244,7 @@ fun PokeTrackerApp(
                     composable(PokeTrackerScreen.PokemonByType.route) {
                         val pokemonByTypeViewModel: PokemonByTypeViewModel = viewModel()
                         PokemonByTypeScreen(
-                            /*pokeTrackerUiState = pokemonByTypeViewModel.pokeTrackerUiState,*/
-                            pokeUiState = pokemonByTypeViewModel.pokeUiStateTest,
-                            selectedType = selectedType,
+                            typeUiState = pokemonByTypeViewModel.typeUiState,
                         ) { pokemon ->
                             selectedPokemon = pokemon
                             navController.navigate(PokeTrackerScreen.Detail.route)

@@ -20,9 +20,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.dimensionResource
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import coil.compose.rememberAsyncImagePainter
 import com.example.application.R
 import com.example.application.model.PokemonResponse
 import com.example.application.ui.screens.ErrorScreen
@@ -92,7 +92,7 @@ fun PokemonDetailCard(
                 )
             }
             Image(
-                painter = painterResource(id = R.drawable.bulbasaur_sprite),
+                painter = rememberAsyncImagePainter(model = pokemon.sprites.frontDefault),
                 contentDescription = stringResource(R.string.bulbasaur),
                 modifier = Modifier
                     .fillMaxWidth()

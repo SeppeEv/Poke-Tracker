@@ -1,46 +1,38 @@
 package com.example.application.ui.screens.pokemon
 
-import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.application.model.TypeResponse
 import com.example.application.network.PokeApi
 import kotlinx.coroutines.launch
-import retrofit2.HttpException
-import java.io.IOException
 
 
-sealed interface PokeUiState {
-    data class Success(val pokemon: String) : PokeUiState
-    object Error : PokeUiState, PokemonDetailUiState
-    object Loading : PokeUiState
+sealed interface TypeUiState {
+    data class Success(val type: TypeResponse) : TypeUiState
+    object Error : TypeUiState, PokemonDetailUiState
+    object Loading : TypeUiState
 }
 
 class PokemonByTypeViewModel : ViewModel() {
-    var pokeUiStateTest: PokeUiState by mutableStateOf(PokeUiState.Loading)
+    var typeUiState: TypeUiState by mutableStateOf(TypeUiState.Loading)
         private set
     init {
-        //getPokemons()
-        getPokemonTest()
+        getPokemonByType()
     }
 
-    fun getPokemonTest() {
+    fun getPokemonByType() {
         viewModelScope.launch {
-            pokeUiStateTest = PokeUiState.Loading
-            pokeUiStateTest = try {
-                val pokemon = PokeApi.retrofitService.getPokemon(1)
-                PokeUiState.Success(
-                    pokemon = pokemon.toString(),
+            typeUiState = TypeUiState.Loading
+            typeUiState = try {
+                val type = PokeApi.retrofitService.getTypeByName("fire")
+                TypeUiState.Success(
+                    type = type
                 )
-            } catch (e: IOException) {
-                PokeUiState.Error
-            } catch (e: HttpException) {
-                PokeUiState.Error
             } catch (e: Exception) {
-                Log.e("PokemonByTypeViewModel", "getPokemonTest: ${e.message}")
-                PokeUiState.Error
+                TypeUiState.Error
             }
         }
     }

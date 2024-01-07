@@ -19,6 +19,7 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.dimensionResource
 import com.example.application.R
 import com.example.application.model.PokemonSpecies
+import com.example.application.model.PokemonsOfType
 
 @Composable
 fun PokemonCard(
@@ -40,7 +41,7 @@ fun PokemonCard(
                 },
         ) {
             Text(
-                text = pokemon.name,
+                text = pokemon.name ?: "",
                 style = MaterialTheme.typography.titleMedium,
                 modifier = Modifier
                     .padding(dimensionResource(id = R.dimen.padding_small)),
@@ -50,7 +51,7 @@ fun PokemonCard(
 }
 
 @Composable
-fun PokemonListGrid(
+fun PokemonByGenerationListGrid(
     pokemons: List<PokemonSpecies>,
     onSelectPokemon: (String) -> Unit,
     modifier: Modifier = Modifier,
@@ -66,6 +67,31 @@ fun PokemonListGrid(
         items(pokemons.size) { index ->
             PokemonCard(
                 pokemon = pokemons[index],
+                onSelectPokemon = onSelectPokemon,
+                modifier = Modifier
+                    .testTag("pokemon_card_$index"),
+            )
+        }
+    }
+}
+
+@Composable
+fun PokemonByTypeListGrid(
+    pokemons: List<PokemonsOfType>,
+    onSelectPokemon: (String) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    LazyVerticalGrid(
+        columns = GridCells.Fixed(3),
+        contentPadding = PaddingValues(vertical = dimensionResource(id = R.dimen.padding_medium)),
+        horizontalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.spacer_small)),
+        verticalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.spacer_small)),
+        modifier = modifier
+            .fillMaxWidth(),
+    ) {
+        items(pokemons.size) { index ->
+            PokemonCard(
+                pokemon = pokemons[index].pokemon,
                 onSelectPokemon = onSelectPokemon,
                 modifier = Modifier
                     .testTag("pokemon_card_$index"),

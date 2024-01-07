@@ -1,6 +1,5 @@
 package com.example.application.ui.screens.pokemon
 
-import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -16,61 +15,36 @@ import com.example.application.ui.screens.LoadingScreen
 
 @Composable
 fun PokemonByTypeScreen(
-    pokeUiState: PokeUiState,
-    selectedType: String?,
+    typeUiState: TypeUiState,
     onSelectPokemon: (String) -> Unit,
 ) {
-    when (pokeUiState) {
-        is PokeUiState.Loading -> LoadingScreen(modifier = Modifier.fillMaxSize())
-        is PokeUiState.Success -> {
-            Log.d("PokemonByTypeScreen", "pokemonUiStateTest: ${pokeUiState.pokemon}")
-            PokemonByTypeContent(
-                pokeUiState.pokemon,
-                selectedType,
-                onSelectPokemon,
-                modifier = Modifier.fillMaxSize(),
-            )
-        }
+    when (typeUiState) {
+        is TypeUiState.Loading -> LoadingScreen(modifier = Modifier.fillMaxSize())
+        is TypeUiState.Success -> {
+            val type = typeUiState.type
 
-        is PokeUiState.Error ->  {
-            Log.d("PokemonByTypeScreen", "pokemonUiStateTest: ${pokeUiState}")
-            ErrorScreen(modifier = Modifier.fillMaxSize())
-        }
-    }
-}
-
-@Composable
-fun PokemonByTypeContent(
-    pokemon: String,
-    selectedType: String?,
-    onSelectPokemon: (String) -> Unit,
-    modifier: Modifier,
-) {
-    Surface(
-        color = MaterialTheme.colorScheme.background,
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(dimensionResource(id = R.dimen.padding_medium)),
-    ) {
-        Column(
-            modifier = Modifier
-                .padding(dimensionResource(id = R.dimen.padding_medium))
-                .fillMaxSize(),
-        ) {
-            Text(text = pokemon, modifier = modifier)
-            if (selectedType != null) {
-                Text(
-                    text = selectedType,
-                    style = MaterialTheme.typography.headlineMedium,
-                )
-            }
-            /*PokemonListGrid(
-                pokemons = listOf(),
-                onSelectPokemon,
+            Surface(
+                color = MaterialTheme.colorScheme.background,
                 modifier = Modifier
-                    .padding(top = dimensionResource(id = R.dimen.padding_medium)),
-                generation.pokemon_species,
-            )*/
+                    .padding(dimensionResource(id = R.dimen.padding_medium)),
+            ) {
+                Column(
+                    modifier = Modifier
+                        .padding(dimensionResource(id = R.dimen.padding_medium)),
+                ) {
+                    if (type != null) {
+                        Text(
+                        text = type.name,
+                        style = MaterialTheme.typography.headlineMedium,
+                        )
+                    }
+                    PokemonByTypeListGrid(
+                        pokemons = type.pokemon,
+                        onSelectPokemon = onSelectPokemon)
+                }
+            }
         }
+
+        is TypeUiState.Error ->  {ErrorScreen(modifier = Modifier.fillMaxSize())}
     }
 }

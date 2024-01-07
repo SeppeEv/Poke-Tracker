@@ -1,6 +1,6 @@
 package com.example.application.model
 
-data class PokemonTypeResponse(
+data class PokemonTypesResponse(
     val results: List<TypeResults>
 )
 
@@ -12,4 +12,14 @@ data class TypeResults(
 data class PokemonType(
     val id: Int,
     val name: String,
+)
+
+data class TypeResponse(
+    val id: Int,
+    val name: String,
+    val pokemon: List<PokemonsOfType>
+)
+
+data class PokemonsOfType(
+    val pokemon: PokemonSpecies
 )

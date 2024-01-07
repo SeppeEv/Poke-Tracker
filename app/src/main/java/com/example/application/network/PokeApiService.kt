@@ -3,7 +3,8 @@ package com.example.application.network
 import com.example.application.model.GenerationResponse
 import com.example.application.model.GenerationsResponse
 import com.example.application.model.PokemonResponse
-import com.example.application.model.PokemonTypeResponse
+import com.example.application.model.PokemonTypesResponse
+import com.example.application.model.TypeResponse
 import kotlinx.serialization.json.Json
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -27,7 +28,10 @@ interface PokeApiService {
     suspend fun getPokemonByName(@Path("name") pokemonName: String): PokemonResponse
 
     @GET("type")
-    suspend fun getTypes(): PokemonTypeResponse
+    suspend fun getTypes(): PokemonTypesResponse
+
+    @GET("type/{name}/")
+    suspend fun getTypeByName(@Path("name") typeName: String): TypeResponse
 
     @GET("generation")
     suspend fun getGenerations(): GenerationsResponse

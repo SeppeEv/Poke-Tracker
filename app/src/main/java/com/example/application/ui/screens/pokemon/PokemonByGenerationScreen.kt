@@ -38,7 +38,7 @@ fun PokemonByGenerationScreen(
                             style = MaterialTheme.typography.headlineMedium,
                         )
                     }
-                    PokemonListGrid(
+                    PokemonByGenerationListGrid(
                         pokemons = generation.pokemon_species,
                         onSelectPokemon,
                         modifier = Modifier

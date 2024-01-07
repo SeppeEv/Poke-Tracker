@@ -32,7 +32,7 @@ class PokemonDetailViewModel : ViewModel() {
                     pokemon = pokemon
                 )
             } catch (e: Exception) {
-                PokeUiState.Error
+                TypeUiState.Error
             }
         }
     }

@@ -11,11 +11,8 @@ data class GenerationsResults(
 
 data class GenerationResponse(
     val id: Int,
+    val name: String,
     val pokemon_species: List<PokemonSpecies>
 )
 
-data class PokemonSpecies(
-    val name: String,
-    val url: String
-)
 

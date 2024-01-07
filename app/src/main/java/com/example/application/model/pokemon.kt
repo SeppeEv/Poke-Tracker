@@ -30,7 +30,9 @@ data class Type(
 )
 
 data class PokemonSprites(
+    @SerializedName("front_default")
     val frontDefault: String,
+    @SerializedName("back_default")
     val backDefault: String
 )
 
@@ -42,4 +44,10 @@ data class PokemonStat(
 
 data class Stat(
     val name: String
+)
+
+
+data class PokemonSpecies(
+    val name: String,
+    val url: String
 )
