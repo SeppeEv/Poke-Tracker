@@ -6,6 +6,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface PokemonDao {
@@ -18,9 +19,9 @@ interface PokemonDao {
     @Delete
     suspend fun delete(pokemon: Pokemon)
 
-    @Query("SELECT * from pokemon WHERE id = 1")
-    fun getPokemon(): Pokemon
+    @Query("SELECT * from pokemon WHERE id = :id")
+    fun getPokemon(id: Int): Flow<Pokemon>
 
     @Query("SELECT * from pokemon ORDER BY name ASC")
-    fun getAllPokemon(): List<Pokemon>
+    fun getAllPokemon(): Flow<List<Pokemon>>
 }

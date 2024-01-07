@@ -10,7 +10,7 @@ data class PokemonResponse(
     val abilities: List<PokemonAbility>,
     val types: List<PokemonTypeEntry>,
     val sprites: PokemonSprites,
-    val stats: List<PokemonStat>  // Include stats here
+    val stats: List<PokemonStat>
 )
 
 data class PokemonAbility(
@@ -45,7 +45,6 @@ data class PokemonStat(
 data class Stat(
     val name: String
 )
-
 
 data class PokemonSpecies(
     val name: String,
