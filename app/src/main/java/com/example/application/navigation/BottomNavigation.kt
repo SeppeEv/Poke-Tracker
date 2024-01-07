@@ -15,6 +15,13 @@ import androidx.navigation.NavDestination
 import com.example.application.R
 import com.example.application.ui.PokeTrackerScreen
 
+/**
+ * Bottom navigation bar for the app.
+ *
+ * @param selectedDestination The currently selected destination.
+ * @param onTabPressed Called when a tab is pressed.
+ * @param modifier Modifier for styling.
+ */
 @Composable
 fun BottomNavigation(
     selectedDestination: NavDestination?,

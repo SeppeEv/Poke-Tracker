@@ -13,6 +13,12 @@ import com.example.application.R
 import com.example.application.ui.screens.ErrorScreen
 import com.example.application.ui.screens.LoadingScreen
 
+/**
+ * Screen that displays a list of pokemons by generation.
+ *
+ * @param generationUiState The state of the generation.
+ * @param onSelectPokemon Called when a pokemon is selected.
+ */
 @Composable
 fun PokemonByGenerationScreen(
     generationUiState: GenerationUiState,

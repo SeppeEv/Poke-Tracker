@@ -14,6 +14,11 @@ sealed interface RandomPokemonUiState {
     object Error : RandomPokemonUiState
     object Loading : RandomPokemonUiState
 }
+
+/**
+ * ViewModel for the pokemon-related screen. It handles interactions and data retrieval
+ * for the pokemon screen, including random pokemon data.
+ */
 class RandomPokemonsViewModel : ViewModel() {
     var randomPokemonUiState: RandomPokemonUiState by mutableStateOf(RandomPokemonUiState.Loading)
         private set

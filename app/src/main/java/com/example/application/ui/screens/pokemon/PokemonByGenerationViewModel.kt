@@ -14,6 +14,11 @@ sealed interface GenerationUiState {
     object Error : GenerationUiState
     object Loading : GenerationUiState
 }
+
+/**
+ * ViewModel for the pokemon-related screen. It handles interactions and data retrieval
+ * for the pokemon screen, including generation data.
+ */
 class PokemonByGenerationViewModel : ViewModel() {
     var generationUiState: GenerationUiState by mutableStateOf(GenerationUiState.Loading)
         private set

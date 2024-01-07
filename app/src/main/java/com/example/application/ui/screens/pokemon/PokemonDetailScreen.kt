@@ -29,6 +29,11 @@ import com.example.application.model.PokemonResponse
 import com.example.application.ui.screens.ErrorScreen
 import com.example.application.ui.screens.LoadingScreen
 
+/**
+ * Screen that displays the details of a pokemon.
+ *
+ * @param pokemonDetailUiState The state of the pokemon.
+ */
 @Composable
 fun PokemonDetailScreen(
     pokemonDetailUiState: PokemonDetailUiState,
@@ -61,6 +66,12 @@ fun PokemonDetailScreen(
     }
 }
 
+/**
+ * Card that displays the details of a pokemon.
+ *
+ * @param pokemon The pokemon to display.
+ * @param pokemonType The type of the pokemon.
+ */
 @Composable
 fun PokemonDetailCard(
     pokemon: PokemonResponse,
@@ -151,6 +162,12 @@ fun PokemonDetailCard(
     }
 }
 
+/**
+ * Column that displays the status of a pokemon.
+ *
+ * @param title The title of the status.
+ * @param value The value of the status.
+ */
 @Composable
 private fun StatusColumn(title: String, value: String) {
     Column(

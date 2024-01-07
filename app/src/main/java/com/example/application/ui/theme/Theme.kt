@@ -79,6 +79,13 @@ private val LightColorScheme = lightColorScheme(
     scrim = md_theme_dark_scrim,
 )
 
+/**
+ * The theme of the application.
+ *
+ * @param darkTheme Whether the theme should be dark.
+ * @param dynamicColor Whether the theme should be dynamic.
+ * @param content The content of the application.
+ */
 @Composable
 fun ApplicationTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),

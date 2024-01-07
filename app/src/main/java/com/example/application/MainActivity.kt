@@ -10,6 +10,9 @@ import com.example.application.ui.PokeTrackerApp
 import com.example.application.ui.screens.utils.PokeTrackerNavigationType
 import com.example.application.ui.theme.ApplicationTheme
 
+/**
+ * Main activity of the application.
+ */
 class MainActivity : ComponentActivity() {
     @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {

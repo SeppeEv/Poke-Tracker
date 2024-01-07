@@ -35,15 +35,21 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.application.R
 import com.example.application.model.GenerationsResults
 import com.example.application.model.TypeResults
 import com.example.application.ui.screens.ErrorScreen
 import com.example.application.ui.screens.LoadingScreen
-import com.example.application.ui.theme.ApplicationTheme
 
+/**
+ * Home screen for the app.
+ *
+ * @param homeUiState The state of the home screen.
+ * @param onTypeClicked Called when a type is clicked.
+ * @param onGenerationClicked Called when a generation is clicked.
+ * @param modifier Modifier for styling.
+ */
 @Composable
 fun HomeScreen(
     homeUiState: HomeUiState,
@@ -88,6 +94,14 @@ fun HomeScreen(
     }
 }
 
+/**
+ * Element for each type.
+ *
+ * @param drawable The image for the type.
+ * @param text The name of the type.
+ * @param onTypeClicked Called when the type is clicked.
+ * @param modifier Modifier for styling.
+ */
 @Composable
 fun TypeElement(
     @DrawableRes drawable: Int,
@@ -125,6 +139,11 @@ fun TypeElement(
     }
 }
 
+/**
+ * Function to get the correct image for each generation.
+ *
+ * @param gen The name of the generation.
+ */
 @Composable
 fun generationImage(
     gen: String
@@ -161,6 +180,11 @@ fun generationImage(
     }
 }
 
+/**
+ * Function to get the correct image for each type.
+ *
+ * @param type The name of the type.
+ */
 @Composable
 fun typeImage(
     type: String
@@ -224,20 +248,13 @@ fun typeImage(
     }
 }
 
-@Preview
-@Composable
-fun TypeElementPreview() {
-    ApplicationTheme {
-        TypeElement(
-            drawable = R.drawable.grass_sprite,
-            text = "test",
-            onTypeClicked = {},
-            Modifier
-                .padding(dimensionResource(id = R.dimen.padding_small)),
-        )
-    }
-}
-
+/**
+ * Represents a generation card.
+ *
+ * @param gen The name of the generation.
+ * @param onGenerationClicked Called when the generation is clicked.
+ * @param modifier Modifier for styling.
+ */
 @Composable
 fun GenerationCard(
     gen: String,
@@ -276,6 +293,13 @@ fun GenerationCard(
     }
 }
 
+/**
+ * Represents a row of type cards.
+ *
+ * @param onTypeClicked Called when a type is clicked.
+ * @param types The list of types.
+ * @param modifier Modifier for styling.
+ */
 @Composable
 fun TypeElementRow(
     onTypeClicked: (String) -> Unit,
@@ -299,6 +323,13 @@ fun TypeElementRow(
     }
 }
 
+/**
+ * Represents a grid of generation cards.
+ *
+ * @param onGenerationClicked Called when a generation is clicked.
+ * @param generations The list of generations.
+ * @param modifier Modifier for styling.
+ */
 @Composable
 fun GenerationCardGrid(
     onGenerationClicked: (String) -> Unit,
@@ -323,6 +354,13 @@ fun GenerationCardGrid(
     }
 }
 
+/**
+ * Represents a section of the home screen.
+ *
+ * @param title The title of the section.
+ * @param modifier Modifier for styling.
+ * @param content The content of the section.
+ */
 @Composable
 fun HomeSection(
     @StringRes title: Int,

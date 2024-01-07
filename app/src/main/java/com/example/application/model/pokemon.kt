@@ -2,6 +2,9 @@ package com.example.application.model
 
 import com.google.gson.annotations.SerializedName
 
+/**
+ * Data classes for the Pokemon API responses.
+ */
 data class PokemonResponse(
     val id: Int,
     val name: String,

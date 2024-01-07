@@ -38,6 +38,9 @@ import com.example.application.ui.screens.pokemon.RandomPokemonsScreen
 import com.example.application.ui.screens.pokemon.RandomPokemonsViewModel
 import com.example.application.ui.screens.utils.PokeTrackerNavigationType
 
+/**
+ * The different screens available in the app.
+ */
 enum class PokeTrackerScreen(@StringRes val title: Int, val route: String) {
     Home(R.string.home, "home"),
     Favorites(R.string.random, "favorites"),
@@ -47,6 +50,11 @@ enum class PokeTrackerScreen(@StringRes val title: Int, val route: String) {
     PokemonByGeneration(R.string.pokemonByGeneration, "generation"),
 }
 
+/**
+ * Entry point for the app.
+ *
+ * @param navigationType The type of navigation to use in the app.
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PokeTrackerApp(

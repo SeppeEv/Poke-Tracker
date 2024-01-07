@@ -1,5 +1,8 @@
 package com.example.application.model
 
+/**
+ * Data classes for the Pokemon API responses.
+ */
 data class PokemonTypesResponse(
     val results: List<TypeResults>
 )

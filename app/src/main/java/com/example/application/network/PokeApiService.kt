@@ -20,6 +20,9 @@ private val retrofit = Retrofit.Builder()
     .addConverterFactory(GsonConverterFactory.create())
     .build()
 
+/**
+ * Retrofit service to fetch Pokemon data.
+ */
 interface PokeApiService {
     @GET("pokemon/{id}/")
     suspend fun getPokemonById(@Path("id") pokemonId: Int): PokemonResponse
@@ -40,6 +43,9 @@ interface PokeApiService {
     suspend fun getGeneration(@Path("id") generationId: Int): GenerationResponse
 }
 
+/**
+ * A public Api object that exposes the lazy-initialized Retrofit service.
+ */
 object PokeApi {
     val retrofitService: PokeApiService by lazy {
         retrofit.create(PokeApiService::class.java)

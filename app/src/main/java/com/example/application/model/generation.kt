@@ -1,5 +1,9 @@
 package com.example.application.model
 
+/**
+ * Data classes for the Pokemon API responses.
+ */
+
 data class GenerationsResponse(
     val results: List<GenerationsResults>
 )

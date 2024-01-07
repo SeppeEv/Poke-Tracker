@@ -11,6 +11,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.application.R
 
+/**
+ * Screen that displays an error message.
+ *
+ * @param modifier Modifier to be applied to the layout.
+
+ */
 @Composable
 fun ErrorScreen(modifier: Modifier = Modifier) {
     Column(

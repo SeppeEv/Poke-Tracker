@@ -21,6 +21,13 @@ import com.example.application.R
 import com.example.application.model.PokemonSpecies
 import com.example.application.model.PokemonsOfType
 
+
+/**
+ * Screen that displays a list of pokemons by type.
+ *
+ * @param typeUiState The state of the type.
+ * @param onSelectPokemon Called when a pokemon is selected.
+ */
 @Composable
 fun PokemonCard(
     pokemon: PokemonSpecies,
@@ -50,6 +57,13 @@ fun PokemonCard(
     }
 }
 
+
+/**
+ * Screen that displays a list of pokemons by generation.
+ *
+ * @param generationUiState The state of the generation.
+ * @param onSelectPokemon Called when a pokemon is selected.
+ */
 @Composable
 fun PokemonByGenerationListGrid(
     pokemons: List<PokemonSpecies>,
@@ -75,6 +89,13 @@ fun PokemonByGenerationListGrid(
     }
 }
 
+
+/**
+ * Screen that displays a list of pokemons by type.
+ *
+ * @param typeUiState The state of the type.
+ * @param onSelectPokemon Called when a pokemon is selected.
+ */
 @Composable
 fun PokemonByTypeListGrid(
     pokemons: List<PokemonsOfType>,

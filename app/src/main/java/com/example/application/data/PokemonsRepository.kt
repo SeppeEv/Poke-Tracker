@@ -2,6 +2,9 @@ package com.example.application.data
 
 import kotlinx.coroutines.flow.Flow
 
+/**
+ * Repository module for handling data operations.
+ */
 interface PokemonsRepository {
 
     /*

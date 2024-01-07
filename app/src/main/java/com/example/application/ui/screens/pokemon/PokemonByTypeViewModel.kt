@@ -16,6 +16,10 @@ sealed interface TypeUiState {
     object Loading : TypeUiState
 }
 
+/**
+ * ViewModel for the pokemon-related screen. It handles interactions and data retrieval
+ * for the pokemon screen, including type data.
+ */
 class PokemonByTypeViewModel : ViewModel() {
     var typeUiState: TypeUiState by mutableStateOf(TypeUiState.Loading)
         private set

@@ -2,8 +2,15 @@ package com.example.application.data
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.google.gson.annotations.SerializedName
 
+/**
+ * Data class that represents a Pokemon.
+ *
+ * @param id The id of the Pokemon.
+ * @param name The name of the Pokemon.
+ * @param height The height of the Pokemon.
+ * @param weight The weight of the Pokemon.
+ */
 @Entity(tableName = "pokemon")
 data class Pokemon(
     @PrimaryKey(autoGenerate = true)
@@ -11,37 +18,4 @@ data class Pokemon(
     val name: String,
     val height: Int,
     val weight: Int,
-)
-
-data class PokemonAbility(
-    val ability: Ability
-)
-
-data class Ability(
-    val name: String
-)
-
-data class PokemonTypeEntry(
-    val type: Type
-)
-
-data class Type(
-    val name: String
-)
-
-data class PokemonSprites(
-    @SerializedName("front_default")
-    val frontDefault: String,
-    @SerializedName("back_default")
-    val backDefault: String
-)
-
-data class PokemonStat(
-    @SerializedName("base_stat")
-    val baseStat: Int,
-    val stat: Stat
-)
-
-data class Stat(
-    val name: String
 )

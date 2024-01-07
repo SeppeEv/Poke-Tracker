@@ -11,6 +11,12 @@ import com.example.application.R
 import com.example.application.ui.screens.ErrorScreen
 import com.example.application.ui.screens.LoadingScreen
 
+/**
+ * Screen that displays a list of pokemons by type.
+ *
+ * @param typeUiState The state of the type.
+ * @param onSelectPokemon Called when a pokemon is selected.
+ */
 @Composable
 fun RandomPokemonsScreen(
     randomPokemonUiState: RandomPokemonUiState,

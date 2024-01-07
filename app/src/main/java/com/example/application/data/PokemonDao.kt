@@ -8,6 +8,9 @@ import androidx.room.Query
 import androidx.room.Update
 import kotlinx.coroutines.flow.Flow
 
+/**
+ * Repository module for handling data operations.
+ */
 @Dao
 interface PokemonDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)

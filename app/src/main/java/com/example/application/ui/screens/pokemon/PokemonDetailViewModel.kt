@@ -5,7 +5,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.application.data.PokemonsRepository
 import com.example.application.model.PokemonResponse
 import com.example.application.network.PokeApi
 import kotlinx.coroutines.launch
@@ -16,6 +15,10 @@ sealed interface PokemonDetailUiState {
     object Loading : PokemonDetailUiState
 }
 
+/**
+ * ViewModel for the pokemon-related screen. It handles interactions and data retrieval
+ * for the pokemon screen, including pokemon data.
+ */
 class PokemonDetailViewModel : ViewModel() {
     var pokemonDetailUiState: PokemonDetailUiState by mutableStateOf(PokemonDetailUiState.Loading)
         private set

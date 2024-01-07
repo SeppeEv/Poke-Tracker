@@ -1,5 +1,8 @@
 package com.example.application.ui.screens.utils
 
+/**
+ * Navigation types for the PokeTracker app.
+ */
 enum class PokeTrackerNavigationType {
     /**
      * Bottom navigation bar for switching between app sections.
