@@ -3,7 +3,6 @@ package com.example.application.ui.screens.home
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -23,7 +22,6 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
@@ -47,49 +45,54 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.application.R
+import com.example.application.model.GenerationResults
+import com.example.application.model.TypeResults
+import com.example.application.ui.screens.ErrorScreen
+import com.example.application.ui.screens.LoadingScreen
 import com.example.application.ui.theme.ApplicationTheme
 
 @Composable
 fun HomeScreen(
+    homeUiState: HomeUiState,
     onTypeClicked: (String) -> Unit = {},
     onGenerationClicked: (String) -> Unit = {},
     modifier: Modifier = Modifier,
 ) {
-    val image = painterResource(R.drawable.lugia_background)
+    when (homeUiState) {
+        is HomeUiState.Loading -> LoadingScreen(modifier = Modifier.fillMaxSize())
+        is HomeUiState.Success -> {
+            val types = homeUiState.types.results
+            val generations = homeUiState.generations.results
+            val image = painterResource(R.drawable.lugia_background)
 
-    Box(
-        modifier = modifier
-            .fillMaxSize(),
-    ) {
-        Image(
-            painter = image,
-            contentDescription = null,
-            contentScale = ContentScale.Crop,
-            modifier = Modifier
-                .fillMaxSize(),
-            alpha = 0.5f,
-        )
-        Column(
-            modifier = modifier
-                .verticalScroll(rememberScrollState()),
-        ) {
-            Spacer(Modifier.height(dimensionResource(id = R.dimen.spacer_medium)))
-            Searchbar(Modifier.padding(horizontal = dimensionResource(id = R.dimen.padding_medium)))
-            HomeSection(title = R.string.types) {
-                TypeElementRow(onTypeClicked)
-            }
-            HomeSection(title = R.string.generations) {
-                GenerationCardGrid(onGenerationClicked)
+            Box(
+                modifier = modifier
+                    .fillMaxSize(),
+            ) {
+                Image(
+                    painter = image,
+                    contentDescription = null,
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier
+                        .fillMaxSize(),
+                    alpha = 0.5f,
+                )
+                Column(
+                    modifier = modifier
+                        .verticalScroll(rememberScrollState()),
+                ) {
+                    Spacer(Modifier.height(dimensionResource(id = R.dimen.spacer_medium)))
+                    Searchbar(Modifier.padding(horizontal = dimensionResource(id = R.dimen.padding_medium)))
+                    HomeSection(title = R.string.types) {
+                        TypeElementRow(onTypeClicked, types)
+                    }
+                    HomeSection(title = R.string.generations) {
+                        GenerationCardGrid(onGenerationClicked, generations)
+                    }
+                }
             }
         }
-    }
-}
-
-@Preview(showBackground = true, backgroundColor = 0xFFF5F0EE, heightDp = 180)
-@Composable
-fun HomeScreenContentPreview() {
-    ApplicationTheme {
-        HomeScreen(onGenerationClicked = {})
+        is HomeUiState.Error -> ErrorScreen(modifier = Modifier.fillMaxSize())
     }
 }
 
@@ -122,7 +125,7 @@ fun Searchbar(
 @Composable
 fun TypeElement(
     @DrawableRes drawable: Int,
-    @StringRes text: Int,
+    text: String,
     onTypeClicked: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -139,21 +142,119 @@ fun TypeElement(
             modifier = modifier,
         ) {
             Image(
-                painter = painterResource(drawable),
+                painter = painterResource(typeImage(type = text)),
                 contentDescription = null,
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
                     .size(88.dp)
-                    .background(MaterialTheme.colorScheme.surfaceVariant)
                     .clip(CircleShape),
             )
             Text(
-                text = stringResource(text),
+                text = text,
                 modifier = Modifier
                     .paddingFromBaseline(top = 24.dp, bottom = 8.dp),
                 style = MaterialTheme.typography.bodyMedium,
             )
         }
+    }
+}
+
+@Composable
+fun generationImage(
+    gen: String
+): Int {
+    if (gen == "generation-i") {
+        return R.drawable.pokemon_red__1_
+    }
+    else if (gen == "generation-ii") {
+        return R.drawable.pokemon_silver__2_
+    }
+    else if (gen == "generation-iii") {
+        return R.drawable.pokemon_emerald__3_
+    }
+    else if (gen == "generation-iv") {
+        return R.drawable.pokemon_diamond__4_
+    }
+    else if (gen == "generation-v") {
+        return R.drawable.pokemon_black__5_
+    }
+    else if (gen == "generation-vi") {
+        return R.drawable.pokemon_x__6_
+    }
+    else if (gen == "generation-vii") {
+        return R.drawable.pokemon_sun_7
+    }
+    else if (gen == "generation-viii") {
+        return R.drawable.pokemon_sword_8
+    }
+    else if (gen == "generation-ix") {
+        return R.drawable.pokemon_scarletviolet_9
+    }
+    else {
+        return R.drawable.pokebal_sprite
+    }
+}
+
+@Composable
+fun typeImage(
+    type: String
+): Int {
+    if (type == "normal") {
+        return R.drawable.normal_sprite
+    }
+    else if (type == "fighting") {
+        return R.drawable.fighting_sprite
+    }
+    else if (type == "flying") {
+        return R.drawable.flying_sprite
+    }
+    else if (type == "poison") {
+        return R.drawable.poison_type
+    }
+    else if (type == "ground") {
+        return R.drawable.ground_sprite
+    }
+    else if (type == "rock") {
+        return R.drawable.rock_sprite
+    }
+    else if (type == "bug") {
+        return R.drawable.bug_sprite
+    }
+    else if (type == "ghost") {
+        return R.drawable.ghost_sprite
+    }
+    else if (type == "steel") {
+        return R.drawable.steel_sprite
+    }
+    else if (type == "fire") {
+        return R.drawable.fire_symbol_sprite
+    }
+    else if (type == "water") {
+        return R.drawable.water_sprite
+    }
+    else if (type == "grass") {
+        return R.drawable.grass_sprite
+    }
+    else if (type == "electric") {
+        return R.drawable.electric_sprite
+    }
+    else if (type == "psychic") {
+        return R.drawable.psychic_sprite
+    }
+    else if (type == "ice") {
+        return R.drawable.ice_sprite
+    }
+    else if (type == "dragon") {
+        return R.drawable.dragon_sprite
+    }
+    else if (type == "dark") {
+        return R.drawable.dark_sprite
+    }
+    else if (type == "fairy") {
+        return R.drawable.fairy_sprite
+    }
+    else {
+        return R.drawable.pokebal_sprite
     }
 }
 
@@ -163,7 +264,7 @@ fun TypeElementPreview() {
     ApplicationTheme {
         TypeElement(
             drawable = R.drawable.grass_sprite,
-            text = R.string.grass_type,
+            text = "test",
             onTypeClicked = {},
             Modifier
                 .padding(dimensionResource(id = R.dimen.padding_small)),
@@ -174,7 +275,7 @@ fun TypeElementPreview() {
 @Composable
 fun GenerationCard(
     @DrawableRes drawable: Int,
-    @StringRes text: Int,
+    text: String,
     onGenerationClicked: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -195,14 +296,14 @@ fun GenerationCard(
 
         ) {
             Image(
-                painter = painterResource(drawable),
+                painter = painterResource(generationImage(text)),
                 contentDescription = null,
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
                     .size(80.dp),
             )
             Text(
-                text = stringResource(text),
+                text = text,
                 style = MaterialTheme.typography.titleMedium,
                 modifier = Modifier
                     .padding(dimensionResource(id = R.dimen.padding_medium)),
@@ -211,22 +312,10 @@ fun GenerationCard(
     }
 }
 
-@Preview
-@Composable
-fun GenerationCardPreview() {
-    ApplicationTheme {
-        GenerationCard(
-            drawable = R.drawable.pokemon_red__1_,
-            text = R.string.generation_1,
-            onGenerationClicked = {},
-            Modifier.padding(dimensionResource(id = R.dimen.padding_small)),
-        )
-    }
-}
-
 @Composable
 fun TypeElementRow(
     onTypeClicked: (String) -> Unit,
+    types: List<TypeResults>,
     modifier: Modifier = Modifier,
 ) {
     LazyRow(
@@ -234,22 +323,14 @@ fun TypeElementRow(
         contentPadding = PaddingValues(horizontal = dimensionResource(id = R.dimen.padding_medium)),
         modifier = modifier,
     ) {
-        val typesData = listOf(
-            "grass",
-            "fire",
-            "water",
-            "bug",
-            "normal",
-            "poison",
-            "electric",
-            "ground",
-        )
-        items(typesData) { item ->
-            TypeElement(
-                drawable = R.drawable.grass_sprite,
-                text = R.string.grass_type,
-                onTypeClicked = onTypeClicked,
-            )
+        types.forEach { type ->
+            item {
+                TypeElement(
+                    drawable = R.drawable.grass_sprite,
+                    text = type.name,
+                    onTypeClicked = onTypeClicked,
+                )
+            }
         }
     }
 }
@@ -257,7 +338,8 @@ fun TypeElementRow(
 @Composable
 fun GenerationCardGrid(
     onGenerationClicked: (String) -> Unit,
-    modifier: Modifier = Modifier,
+    generations: List<GenerationResults>,
+    modifier: Modifier = Modifier
 ) {
     LazyHorizontalGrid(
         rows = GridCells.Fixed(3),
@@ -267,34 +349,14 @@ fun GenerationCardGrid(
         modifier = modifier
             .height(dimensionResource(id = R.dimen.generations_grid_height)),
     ) {
-        val generationsData = listOf(
-            "generation_1",
-            "generation_2",
-            "generation_3",
-            "generation_4",
-            "generation_5",
-            "generation_6",
-            "generation_7",
-            "generation_8",
-        )
-        items(generationsData) { item ->
+        items(generations) { gen ->
             GenerationCard(
                 drawable = R.drawable.pokemon_red__1_,
-                text = R.string.generation_1,
+                text = gen.name,
                 onGenerationClicked = onGenerationClicked,
                 Modifier.height(dimensionResource(id = R.dimen.generations_card_height)),
             )
         }
-    }
-}
-
-@Preview
-@Composable
-fun GenerationCardGridPreview() {
-    ApplicationTheme {
-        GenerationCardGrid(
-            onGenerationClicked = {},
-        )
     }
 }
 

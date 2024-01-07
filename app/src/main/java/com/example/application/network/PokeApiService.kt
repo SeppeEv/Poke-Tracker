@@ -1,25 +1,35 @@
 package com.example.application.network
 
-import com.example.application.model.PokemonTest
-import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
+import com.example.application.model.GenerationResponse
+import com.example.application.model.PokemonResponse
+import com.example.application.model.PokemonTypeResponse
 import kotlinx.serialization.json.Json
-import okhttp3.MediaType.Companion.toMediaType
 import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
+import retrofit2.http.Path
 
 private const val BASE_URL = "https://pokeapi.co/api/v2/"
 
+private val json = Json { ignoreUnknownKeys = true }
+
 private val retrofit = Retrofit.Builder()
-    .addConverterFactory(Json {ignoreUnknownKeys = true}.asConverterFactory("application/json".toMediaType()))
     .baseUrl(BASE_URL)
+    .addConverterFactory(GsonConverterFactory.create())
     .build()
 
 interface PokeApiService {
-    @GET("pokemon/1")
-    suspend fun getPokemon(): PokemonTest
+    @GET("pokemon/{id}/")
+    suspend fun getPokemon(@Path("id") pokemonId: Int): PokemonResponse
+
+    @GET("type")
+    suspend fun getTypes(): PokemonTypeResponse
+
+    @GET("generation")
+    suspend fun getGenerations(): GenerationResponse
 }
 
-object PokeTrackerApi {
+object PokeApi {
     val retrofitService: PokeApiService by lazy {
         retrofit.create(PokeApiService::class.java)
     }
