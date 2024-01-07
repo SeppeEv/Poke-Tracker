@@ -25,21 +25,22 @@ import com.example.application.R
 import com.example.application.navigation.BottomNavigation
 import com.example.application.navigation.PokeTrackerNavigationRail
 import com.example.application.navigation.TopNavigation
+import com.example.application.ui.screens.about.AboutScreen
 import com.example.application.ui.screens.home.HomeScreen
 import com.example.application.ui.screens.home.HomeViewModel
-import com.example.application.ui.screens.pokemon.FavoritePokemonsScreen
 import com.example.application.ui.screens.pokemon.PokemonByGenerationScreen
 import com.example.application.ui.screens.pokemon.PokemonByGenerationViewModel
 import com.example.application.ui.screens.pokemon.PokemonByTypeScreen
 import com.example.application.ui.screens.pokemon.PokemonByTypeViewModel
 import com.example.application.ui.screens.pokemon.PokemonDetailScreen
 import com.example.application.ui.screens.pokemon.PokemonDetailViewModel
-import com.example.application.ui.screens.profile.ProfileScreen
+import com.example.application.ui.screens.pokemon.RandomPokemonsScreen
+import com.example.application.ui.screens.pokemon.RandomPokemonsViewModel
 import com.example.application.ui.screens.utils.PokeTrackerNavigationType
 
 enum class PokeTrackerScreen(@StringRes val title: Int, val route: String) {
     Home(R.string.home, "home"),
-    Favorites(R.string.favorites, "favorites"),
+    Favorites(R.string.random, "favorites"),
     Profile(R.string.profile, "profile"),
     Detail(R.string.detail, "detail"),
     PokemonByType(R.string.pokemonByType, "type"),
@@ -101,10 +102,13 @@ fun PokeTrackerApp(
                         )
                     }
                     composable(PokeTrackerScreen.Favorites.route) {
-                        FavoritePokemonsScreen()
+                        val randomPokemonViewModel: RandomPokemonsViewModel = viewModel()
+                        RandomPokemonsScreen(
+                            randomPokemonUiState = randomPokemonViewModel.randomPokemonUiState,
+                        )
                     }
                     composable(PokeTrackerScreen.Profile.route) {
-                        ProfileScreen()
+                        AboutScreen()
                     }
                     composable(PokeTrackerScreen.Detail.route) {
                         val pokemonDetailViewModel: PokemonDetailViewModel = viewModel()
@@ -161,10 +165,13 @@ fun PokeTrackerApp(
                                 )
                             }
                             composable(PokeTrackerScreen.Favorites.route) {
-                                FavoritePokemonsScreen()
+                                val randomPokemonViewModel: RandomPokemonsViewModel = viewModel()
+                                RandomPokemonsScreen(
+                                    randomPokemonUiState = randomPokemonViewModel.randomPokemonUiState,
+                                )
                             }
                             composable(PokeTrackerScreen.Profile.route) {
-                                ProfileScreen()
+                                AboutScreen()
                             }
                             composable(PokeTrackerScreen.Detail.route) {
                                 val pokemonDetailViewModel: PokemonDetailViewModel = viewModel()
@@ -231,10 +238,13 @@ fun PokeTrackerApp(
                         )
                     }
                     composable(PokeTrackerScreen.Favorites.route) {
-                        FavoritePokemonsScreen()
+                        val randomPokemonViewModel: RandomPokemonsViewModel = viewModel()
+                        RandomPokemonsScreen(
+                            randomPokemonUiState = randomPokemonViewModel.randomPokemonUiState,
+                        )
                     }
                     composable(PokeTrackerScreen.Profile.route) {
-                        ProfileScreen()
+                        AboutScreen()
                     }
                     composable(PokeTrackerScreen.Detail.route) {
                         val pokemonDetailViewModel: PokemonDetailViewModel = viewModel()

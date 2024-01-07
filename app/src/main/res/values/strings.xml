@@ -32,4 +32,7 @@
     <string name="sp_atk">Sp. Atk</string>
     <string name="sp_def">Sp. Def</string>
     <string name="speed">Speed</string>
+    <string name="bottom_navigation_random">Random</string>
+    <string name="random">random</string>
+    <string name="bottom_navigation_about">About</string>
 </resources>

@@ -22,7 +22,7 @@ private val retrofit = Retrofit.Builder()
 
 interface PokeApiService {
     @GET("pokemon/{id}/")
-    suspend fun getPokemon(@Path("id") pokemonId: Int): PokemonResponse
+    suspend fun getPokemonById(@Path("id") pokemonId: Int): PokemonResponse
 
     @GET("pokemon/{name}/")
     suspend fun getPokemonByName(@Path("name") pokemonName: String): PokemonResponse

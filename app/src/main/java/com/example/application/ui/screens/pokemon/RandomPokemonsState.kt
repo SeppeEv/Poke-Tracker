@@ -1,5 +1,5 @@
 package com.example.application.ui.screens.pokemon
 
-data class FavoritePokemonsState(
+data class RandomPokemonsState(
     val pokemons: List<String> = listOf("Mew", "Pikachu", "Eevee")
 )

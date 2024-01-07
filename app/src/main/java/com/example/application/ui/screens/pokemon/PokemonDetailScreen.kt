@@ -141,6 +141,7 @@ fun PokemonDetailCard(
                     Text(
                         text = ability.ability.name,
                         style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Bold),
+                        modifier = Modifier.padding(end = dimensionResource(id = R.dimen.padding_small)),
                     )
                 }
             }

@@ -1,9 +1,9 @@
 package com.example.application.navigation
 
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AccountCircle
-import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -12,8 +12,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavDestination
-import com.example.application.ui.PokeTrackerScreen
 import com.example.application.R
+import com.example.application.ui.PokeTrackerScreen
 
 @Composable
 fun BottomNavigation(
@@ -43,13 +43,13 @@ fun BottomNavigation(
             selected = selectedDestination?.route == PokeTrackerScreen.Favorites.route,
             icon = {
                 Icon(
-                    imageVector = Icons.Default.Favorite,
+                    imageVector = Icons.Default.Star,
                     contentDescription = null,
                 )
             },
             label = {
                 Text(
-                    text = stringResource(R.string.bottom_navigation_favorites),
+                    text = stringResource(R.string.bottom_navigation_random),
                 )
             },
             onClick = { onTabPressed(PokeTrackerScreen.Favorites.route) },
@@ -58,13 +58,13 @@ fun BottomNavigation(
             selected = selectedDestination?.route == PokeTrackerScreen.Profile.route,
             icon = {
                 Icon(
-                    imageVector = Icons.Default.AccountCircle,
+                    imageVector = Icons.Default.Info,
                     contentDescription = null,
                 )
             },
             label = {
                 Text(
-                    text = stringResource(R.string.bottom_navigation_profile),
+                    text = stringResource(R.string.bottom_navigation_about),
                 )
             },
             onClick = { onTabPressed(PokeTrackerScreen.Profile.route) },
