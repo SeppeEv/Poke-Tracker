@@ -45,7 +45,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.application.R
-import com.example.application.model.GenerationResults
+import com.example.application.model.GenerationsResults
 import com.example.application.model.TypeResults
 import com.example.application.ui.screens.ErrorScreen
 import com.example.application.ui.screens.LoadingScreen
@@ -274,8 +274,7 @@ fun TypeElementPreview() {
 
 @Composable
 fun GenerationCard(
-    @DrawableRes drawable: Int,
-    text: String,
+    gen: String,
     onGenerationClicked: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -290,20 +289,19 @@ fun GenerationCard(
             modifier = Modifier
                 .width(255.dp)
                 .clickable {
-                    // TODO: Pass the correct generation to the OnGenerationClicked lambda
-                    onGenerationClicked("generation_10")
+                    onGenerationClicked(gen)
                 },
 
         ) {
             Image(
-                painter = painterResource(generationImage(text)),
+                painter = painterResource(generationImage(gen)),
                 contentDescription = null,
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
                     .size(80.dp),
             )
             Text(
-                text = text,
+                text = gen,
                 style = MaterialTheme.typography.titleMedium,
                 modifier = Modifier
                     .padding(dimensionResource(id = R.dimen.padding_medium)),
@@ -338,7 +336,7 @@ fun TypeElementRow(
 @Composable
 fun GenerationCardGrid(
     onGenerationClicked: (String) -> Unit,
-    generations: List<GenerationResults>,
+    generations: List<GenerationsResults>,
     modifier: Modifier = Modifier
 ) {
     LazyHorizontalGrid(
@@ -351,8 +349,7 @@ fun GenerationCardGrid(
     ) {
         items(generations) { gen ->
             GenerationCard(
-                drawable = R.drawable.pokemon_red__1_,
-                text = gen.name,
+                gen = gen.name,
                 onGenerationClicked = onGenerationClicked,
                 Modifier.height(dimensionResource(id = R.dimen.generations_card_height)),
             )

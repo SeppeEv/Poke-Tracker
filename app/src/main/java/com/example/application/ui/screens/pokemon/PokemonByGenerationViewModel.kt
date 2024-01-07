@@ -1,33 +1,38 @@
 package com.example.application.ui.screens.pokemon
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewmodel.initializer
-import androidx.lifecycle.viewmodel.viewModelFactory
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import androidx.lifecycle.viewModelScope
+import com.example.application.model.GenerationResponse
+import com.example.application.network.PokeApi
+import kotlinx.coroutines.launch
 
+sealed interface GenerationUiState {
+    data class Success(val generation: GenerationResponse) : GenerationUiState
+    object Error : GenerationUiState
+    object Loading : GenerationUiState
+}
 class PokemonByGenerationViewModel : ViewModel() {
-
-    private val _uiState = MutableStateFlow(PokemonByGenerationState())
-    val uiState: StateFlow<PokemonByGenerationState> = _uiState.asStateFlow()
-
-    private var pokemons: List<String> = listOf()
-
-    fun getPokemons(): List<String> {
-        return pokemons
-    }
+    var generationUiState: GenerationUiState by mutableStateOf(GenerationUiState.Loading)
+        private set
 
     init {
-        pokemons = getPokemons()
+        getPokemonByGeneration()
     }
 
-    companion object {
-        val Factory: ViewModelProvider.Factory = viewModelFactory {
-            initializer {
-                PokemonByGenerationViewModel()
-            }
-        }
+    private fun getPokemonByGeneration() {
+       viewModelScope.launch {
+           generationUiState = GenerationUiState.Loading
+           generationUiState = try {
+               val generation = PokeApi.retrofitService.getGeneration(1)
+               GenerationUiState.Success(
+                   generation = generation
+               )
+           } catch (e: Exception) {
+               GenerationUiState.Error
+           }
+       }
     }
 }

@@ -1,15 +1,11 @@
 package com.example.application.ui.screens.pokemon
 
-import androidx.annotation.DrawableRes
-import androidx.annotation.StringRes
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -19,19 +15,14 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.dimensionResource
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import com.example.application.R
-import com.example.application.ui.theme.ApplicationTheme
+import com.example.application.model.PokemonSpecies
 
 @Composable
 fun PokemonCard(
-    @DrawableRes drawable: Int,
-    @StringRes text: Int,
+    pokemon: PokemonSpecies,
     onSelectPokemon: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -45,21 +36,14 @@ fun PokemonCard(
             modifier = Modifier
                 .width(dimensionResource(id = R.dimen.pokemon_card_width))
                 .clickable {
-                    onSelectPokemon("Charizard")
+                    onSelectPokemon(pokemon.name)
                 },
         ) {
-            Image(
-                painter = painterResource(drawable),
-                contentDescription = null,
-                contentScale = ContentScale.Crop,
-                modifier = Modifier
-                    .size(dimensionResource(id = R.dimen.pokemon_card_image_size)),
-            )
             Text(
-                text = stringResource(text),
-                style = MaterialTheme.typography.bodySmall,
+                text = pokemon.name,
+                style = MaterialTheme.typography.titleMedium,
                 modifier = Modifier
-                    .padding(top = dimensionResource(id = R.dimen.padding_small)),
+                    .padding(dimensionResource(id = R.dimen.padding_small)),
             )
         }
     }
@@ -67,6 +51,7 @@ fun PokemonCard(
 
 @Composable
 fun PokemonListGrid(
+    pokemons: List<PokemonSpecies>,
     onSelectPokemon: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -78,25 +63,13 @@ fun PokemonListGrid(
         modifier = modifier
             .fillMaxWidth(),
     ) {
-        items(151) {
+        items(pokemons.size) { index ->
             PokemonCard(
-                drawable = R.drawable.bulbasaur_sprite,
-                text = R.string.bulbasaur,
-                onSelectPokemon,
-                Modifier
-                    .padding(dimensionResource(id = R.dimen.padding_small))
-                    .testTag("PokemonCard"),
+                pokemon = pokemons[index],
+                onSelectPokemon = onSelectPokemon,
+                modifier = Modifier
+                    .testTag("pokemon_card_$index"),
             )
         }
-    }
-}
-
-@Preview
-@Composable
-fun PokemonListGridPreview() {
-    ApplicationTheme {
-        PokemonListGrid(
-            onSelectPokemon = {},
-        )
     }
 }

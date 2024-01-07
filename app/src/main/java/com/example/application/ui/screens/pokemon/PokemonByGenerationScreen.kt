@@ -1,45 +1,52 @@
 package com.example.application.ui.screens.pokemon
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.application.R
+import com.example.application.ui.screens.ErrorScreen
+import com.example.application.ui.screens.LoadingScreen
 
 @Composable
 fun PokemonByGenerationScreen(
-    pokemonByGenerationViewModel: PokemonByGenerationViewModel = viewModel(factory = PokemonByGenerationViewModel.Factory),
-    generation: String? = "Generation 1",
+    generationUiState: GenerationUiState,
     onSelectPokemon: (String) -> Unit,
 ) {
-    val pokemonByGenerationState = pokemonByGenerationViewModel.uiState.collectAsState()
+    when (generationUiState) {
+        is GenerationUiState.Loading -> LoadingScreen(modifier = Modifier.fillMaxSize())
+        is GenerationUiState.Success -> {
+            val generation = generationUiState.generation
 
-    Surface(
-        color = MaterialTheme.colorScheme.background,
-        modifier = Modifier
-            .padding(dimensionResource(id = R.dimen.padding_medium)),
-    ) {
-        Column(
-            modifier = Modifier
-                .padding(dimensionResource(id = R.dimen.padding_medium)),
-        ) {
-            if (generation != null) {
-                Text(
-                    text = generation,
-                    style = MaterialTheme.typography.headlineMedium,
-                )
-            }
-            PokemonListGrid(
-                onSelectPokemon,
+            Surface(
+                color = MaterialTheme.colorScheme.background,
                 modifier = Modifier
-                    .padding(top = dimensionResource(id = R.dimen.padding_medium)),
-            )
+                    .padding(dimensionResource(id = R.dimen.padding_medium)),
+            ) {
+                Column(
+                    modifier = Modifier
+                        .padding(dimensionResource(id = R.dimen.padding_medium)),
+                ) {
+                    if (generation != null) {
+                        Text(
+                            text = generation.id.toString(),
+                            style = MaterialTheme.typography.headlineMedium,
+                        )
+                    }
+                    PokemonListGrid(
+                        pokemons = generation.pokemon_species,
+                        onSelectPokemon,
+                        modifier = Modifier
+                            .padding(top = dimensionResource(id = R.dimen.padding_medium)),
+                    )
+                }
+            }
         }
+        is GenerationUiState.Error -> ErrorScreen(modifier = Modifier.fillMaxSize())
     }
 }

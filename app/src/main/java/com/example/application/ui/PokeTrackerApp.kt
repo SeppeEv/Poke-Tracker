@@ -29,6 +29,7 @@ import com.example.application.ui.screens.home.HomeScreen
 import com.example.application.ui.screens.home.HomeViewModel
 import com.example.application.ui.screens.pokemon.FavoritePokemonsScreen
 import com.example.application.ui.screens.pokemon.PokemonByGenerationScreen
+import com.example.application.ui.screens.pokemon.PokemonByGenerationViewModel
 import com.example.application.ui.screens.pokemon.PokemonByTypeScreen
 import com.example.application.ui.screens.pokemon.PokemonByTypeViewModel
 import com.example.application.ui.screens.pokemon.PokemonDetailScreen
@@ -119,8 +120,9 @@ fun PokeTrackerApp(
                         }
                     }
                     composable(PokeTrackerScreen.PokemonByGeneration.route) {
+                        val generationViewModel: PokemonByGenerationViewModel = viewModel()
                         PokemonByGenerationScreen(
-                            generation = selectedGeneration,
+                            generationUiState = generationViewModel.generationUiState,
                         ) { pokemon ->
                             selectedPokemon = pokemon
                             navController.navigate(PokeTrackerScreen.Detail.route)
@@ -178,8 +180,9 @@ fun PokeTrackerApp(
                                 }
                             }
                             composable(PokeTrackerScreen.PokemonByGeneration.route) {
+                                val generationViewModel: PokemonByGenerationViewModel = viewModel()
                                 PokemonByGenerationScreen(
-                                    generation = selectedGeneration,
+                                    generationUiState = generationViewModel.generationUiState,
                                 ) { pokemon ->
                                     selectedPokemon = pokemon
                                     navController.navigate(PokeTrackerScreen.Detail.route)
@@ -247,8 +250,9 @@ fun PokeTrackerApp(
                         }
                     }
                     composable(PokeTrackerScreen.PokemonByGeneration.route) {
+                        val generationViewModel: PokemonByGenerationViewModel = viewModel()
                         PokemonByGenerationScreen(
-                            generation = selectedGeneration,
+                            generationUiState = generationViewModel.generationUiState,
                         ) { pokemon ->
                             selectedPokemon = pokemon
                             navController.navigate(PokeTrackerScreen.Detail.route)

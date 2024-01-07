@@ -64,11 +64,13 @@ fun PokemonByTypeContent(
                     style = MaterialTheme.typography.headlineMedium,
                 )
             }
-            PokemonListGrid(
+            /*PokemonListGrid(
+                pokemons = listOf(),
                 onSelectPokemon,
                 modifier = Modifier
                     .padding(top = dimensionResource(id = R.dimen.padding_medium)),
-            )
+                generation.pokemon_species,
+            )*/
         }
     }
 }

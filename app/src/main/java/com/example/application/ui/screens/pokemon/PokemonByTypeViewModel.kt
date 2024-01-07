@@ -19,9 +19,6 @@ sealed interface PokeUiState {
 }
 
 class PokemonByTypeViewModel : ViewModel() {
-    /*var pokeTrackerUiState: PokeUiState by mutableStateOf(PokeUiState.Loading)
-        private set*/
-
     var pokeUiStateTest: PokeUiState by mutableStateOf(PokeUiState.Loading)
         private set
     init {

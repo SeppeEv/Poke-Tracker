@@ -1,6 +1,7 @@
 package com.example.application.network
 
 import com.example.application.model.GenerationResponse
+import com.example.application.model.GenerationsResponse
 import com.example.application.model.PokemonResponse
 import com.example.application.model.PokemonTypeResponse
 import kotlinx.serialization.json.Json
@@ -26,7 +27,10 @@ interface PokeApiService {
     suspend fun getTypes(): PokemonTypeResponse
 
     @GET("generation")
-    suspend fun getGenerations(): GenerationResponse
+    suspend fun getGenerations(): GenerationsResponse
+
+    @GET("generation/{id}/")
+    suspend fun getGeneration(@Path("id") generationId: Int): GenerationResponse
 }
 
 object PokeApi {
