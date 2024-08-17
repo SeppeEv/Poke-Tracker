@@ -25,7 +25,9 @@ fun PokemonByTypeScreen(
     onSelectPokemon: (String) -> Unit,
 ) {
     when (typeUiState) {
-        is TypeUiState.Loading -> LoadingScreen(modifier = Modifier.fillMaxSize())
+        is TypeUiState.Loading -> {
+            LoadingScreen(modifier = Modifier.fillMaxSize())
+        }
         is TypeUiState.Success -> {
             val type = typeUiState.type
 
@@ -51,6 +53,8 @@ fun PokemonByTypeScreen(
             }
         }
 
-        is TypeUiState.Error ->  {ErrorScreen(modifier = Modifier.fillMaxSize())}
+        is TypeUiState.Error ->  {
+            ErrorScreen(modifier = Modifier.fillMaxSize())
+        }
     }
 }

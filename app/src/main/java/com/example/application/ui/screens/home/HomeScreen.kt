@@ -1,6 +1,5 @@
 package com.example.application.ui.screens.home
 
-import android.util.Log
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
@@ -273,7 +272,6 @@ fun GenerationCard(
             modifier = Modifier
                 .width(255.dp)
                 .clickable {
-                    Log.d("GenerationCard", "Generation clicked: ${genNameToInt(gen).toString()}")
                     onGenerationClicked(genNameToInt(gen).toString())
                 },
 

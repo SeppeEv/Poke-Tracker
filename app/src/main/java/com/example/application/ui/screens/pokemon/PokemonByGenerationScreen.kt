@@ -1,6 +1,5 @@
 package com.example.application.ui.screens.pokemon
 
-import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -27,12 +26,10 @@ fun PokemonByGenerationScreen(
 ) {
     when (generationUiState) {
         is GenerationUiState.Loading -> {
-            Log.d("PokemonByGenerationScreen", "Displaying loading screen")
             LoadingScreen(
                 modifier = Modifier.fillMaxSize(),
             )}
         is GenerationUiState.Success -> {
-            Log.d("PokemonByGenerationScreen", "Displaying succes screen")
             val generation = generationUiState.generation
 
             Surface(
@@ -60,7 +57,6 @@ fun PokemonByGenerationScreen(
             }
         }
         is GenerationUiState.Error -> {
-            Log.e("PokemonByGenerationScreen", "Error screen")
             ErrorScreen(modifier = Modifier.fillMaxSize())
         }
     }

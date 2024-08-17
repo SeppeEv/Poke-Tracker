@@ -23,15 +23,18 @@ sealed interface TypeUiState {
 class PokemonByTypeViewModel : ViewModel() {
     var typeUiState: TypeUiState by mutableStateOf(TypeUiState.Loading)
         private set
-    init {
-        getPokemonByType()
-    }
 
-    fun getPokemonByType() {
+    private var currentType: String? = null
+
+    fun getPokemonByType(type: String) {
+        if (currentType == type) {
+            return
+        }
+        currentType = type
         viewModelScope.launch {
             typeUiState = TypeUiState.Loading
             typeUiState = try {
-                val type = PokeApi.retrofitService.getTypeByName("fire")
+                val type = PokeApi.retrofitService.getTypeByName(type)
                 TypeUiState.Success(
                     type = type
                 )

@@ -23,15 +23,18 @@ class PokemonDetailViewModel : ViewModel() {
     var pokemonDetailUiState: PokemonDetailUiState by mutableStateOf(PokemonDetailUiState.Loading)
         private set
 
-    init {
-        getPokemonDetail()
-    }
+    private var currentPokemonName: String? = null
 
-    private fun getPokemonDetail() {
+    fun getPokemonDetail(pokemonName: String) {
+        if (currentPokemonName == pokemonName) {
+            return
+        }
+        currentPokemonName = pokemonName
+
         viewModelScope.launch {
             pokemonDetailUiState = PokemonDetailUiState.Loading
             pokemonDetailUiState = try {
-                val pokemon = PokeApi.retrofitService.getPokemonByName("mew")
+                val pokemon = PokeApi.retrofitService.getPokemonByName(pokemonName)
                 PokemonDetailUiState.Success(
                     pokemon = pokemon
                 )
