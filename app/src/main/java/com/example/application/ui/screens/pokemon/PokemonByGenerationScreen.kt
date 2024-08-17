@@ -1,5 +1,6 @@
 package com.example.application.ui.screens.pokemon
 
+import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -25,8 +26,13 @@ fun PokemonByGenerationScreen(
     onSelectPokemon: (String) -> Unit,
 ) {
     when (generationUiState) {
-        is GenerationUiState.Loading -> LoadingScreen(modifier = Modifier.fillMaxSize())
+        is GenerationUiState.Loading -> {
+            Log.d("PokemonByGenerationScreen", "Displaying loading screen")
+            LoadingScreen(
+                modifier = Modifier.fillMaxSize(),
+            )}
         is GenerationUiState.Success -> {
+            Log.d("PokemonByGenerationScreen", "Displaying succes screen")
             val generation = generationUiState.generation
 
             Surface(
@@ -40,19 +46,22 @@ fun PokemonByGenerationScreen(
                 ) {
                     if (generation != null) {
                         Text(
-                            text = generation.id.toString(),
+                            text = "Generation ${generation.id}",
                             style = MaterialTheme.typography.headlineMedium,
                         )
+                        PokemonByGenerationListGrid(
+                            pokemons = generation.pokemon_species,
+                            onSelectPokemon,
+                            modifier = Modifier
+                                .padding(top = dimensionResource(id = R.dimen.padding_medium)),
+                        )
                     }
-                    PokemonByGenerationListGrid(
-                        pokemons = generation.pokemon_species,
-                        onSelectPokemon,
-                        modifier = Modifier
-                            .padding(top = dimensionResource(id = R.dimen.padding_medium)),
-                    )
                 }
             }
         }
-        is GenerationUiState.Error -> ErrorScreen(modifier = Modifier.fillMaxSize())
+        is GenerationUiState.Error -> {
+            Log.e("PokemonByGenerationScreen", "Error screen")
+            ErrorScreen(modifier = Modifier.fillMaxSize())
+        }
     }
 }

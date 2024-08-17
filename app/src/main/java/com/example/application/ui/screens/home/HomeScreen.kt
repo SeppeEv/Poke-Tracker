@@ -1,5 +1,6 @@
 package com.example.application.ui.screens.home
 
+import android.util.Log
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
@@ -272,7 +273,8 @@ fun GenerationCard(
             modifier = Modifier
                 .width(255.dp)
                 .clickable {
-                    onGenerationClicked(gen)
+                    Log.d("GenerationCard", "Generation clicked: ${genNameToInt(gen).toString()}")
+                    onGenerationClicked(genNameToInt(gen).toString())
                 },
 
         ) {
@@ -383,5 +385,38 @@ fun HomeSection(
             )
             content()
         }
+    }
+}
+
+fun genNameToInt(name: String) : Int {
+    if (name == "generation-i") {
+        return 1
+    }
+    else if (name == "generation-ii") {
+        return 2
+    }
+    else if (name == "generation-iii") {
+        return 3
+    }
+    else if (name == "generation-iv") {
+        return 4
+    }
+    else if (name == "generation-v") {
+        return 5
+    }
+    else if (name == "generation-vi") {
+        return 6
+    }
+    else if (name == "generation-vii") {
+        return 7
+    }
+    else if (name == "generation-viii") {
+        return 8
+    }
+    else if (name == "generation-ix") {
+        return 9
+    }
+    else {
+        return 0
     }
 }

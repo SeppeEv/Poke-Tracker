@@ -1,5 +1,6 @@
 package com.example.application.ui
 
+import android.util.Log
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
@@ -47,7 +48,7 @@ enum class PokeTrackerScreen(@StringRes val title: Int, val route: String) {
     Profile(R.string.profile, "profile"),
     Detail(R.string.detail, "detail"),
     PokemonByType(R.string.pokemonByType, "type"),
-    PokemonByGeneration(R.string.pokemonByGeneration, "generation"),
+    PokemonByGeneration(R.string.pokemonByGeneration, "generation/{generationId}"),
 }
 
 /**
@@ -62,7 +63,7 @@ fun PokeTrackerApp(
     navController: NavHostController = rememberNavController(),
 ) {
     val backStackEntry by navController.currentBackStackEntryAsState()
-    val currentScreen = PokeTrackerScreen.values().find {
+    val currentScreen = PokeTrackerScreen.entries.find {
         it.route.equals(
             backStackEntry?.destination?.route ?: PokeTrackerScreen.Home.route,
             ignoreCase = true,
@@ -103,9 +104,10 @@ fun PokeTrackerApp(
                                 selectedType = type
                                 navController.navigate(PokeTrackerScreen.PokemonByType.route)
                             },
-                            onGenerationClicked = { generation ->
-                                selectedGeneration = generation
-                                navController.navigate(PokeTrackerScreen.PokemonByGeneration.route)
+                            onGenerationClicked = { generationID ->
+                                selectedGeneration = generationID
+                                navController.navigate("generation/$generationID")
+                                //navController.navigate(PokeTrackerScreen.PokemonByGeneration.route)
                             },
                         )
                     }
@@ -132,14 +134,27 @@ fun PokeTrackerApp(
                             navController.navigate(PokeTrackerScreen.Detail.route)
                         }
                     }
-                    composable(PokeTrackerScreen.PokemonByGeneration.route) {
-                        val generationViewModel: PokemonByGenerationViewModel = viewModel()
-                        PokemonByGenerationScreen(
-                            generationUiState = generationViewModel.generationUiState,
-                        ) { pokemon ->
-                            selectedPokemon = pokemon
-                            navController.navigate(PokeTrackerScreen.Detail.route)
+                    composable(PokeTrackerScreen.PokemonByGeneration.route) { backStackEntry ->
+                        // Extract generation ID from navigation arguments
+                        Log.d("PokeTrackerApp", "Backstack entry: ${backStackEntry.arguments}")
+                        val generationId = backStackEntry.arguments?.getString("generationId")?.toIntOrNull()
+                        Log.d("PokeTrackerApp", "Generation ID: $generationId")
+                        val pokemonByGenerationViewModel: PokemonByGenerationViewModel = viewModel()
+
+                        // Fetch data for the generation if the ID is valid
+                        generationId.let {
+                            if (generationId != null) {
+                                pokemonByGenerationViewModel.getPokemonByGeneration(generationId)
+                            }
                         }
+
+                        PokemonByGenerationScreen(
+                            generationUiState = pokemonByGenerationViewModel.generationUiState,
+                            onSelectPokemon = { pokemon ->
+                                selectedPokemon = pokemon
+                                navController.navigate(PokeTrackerScreen.Detail.route)
+                            }
+                        )
                     }
                 }
             }
@@ -166,9 +181,9 @@ fun PokeTrackerApp(
                                         selectedType = type
                                         navController.navigate(PokeTrackerScreen.PokemonByType.route)
                                     },
-                                    onGenerationClicked = { generation ->
-                                        selectedGeneration = generation
-                                        navController.navigate(PokeTrackerScreen.PokemonByGeneration.route)
+                                    onGenerationClicked = { generationID ->
+                                        selectedGeneration = generationID
+                                        navController.navigate("generation/$generationID")
                                     },
                                 )
                             }
@@ -195,14 +210,24 @@ fun PokeTrackerApp(
                                     navController.navigate(PokeTrackerScreen.Detail.route)
                                 }
                             }
-                            composable(PokeTrackerScreen.PokemonByGeneration.route) {
-                                val generationViewModel: PokemonByGenerationViewModel = viewModel()
-                                PokemonByGenerationScreen(
-                                    generationUiState = generationViewModel.generationUiState,
-                                ) { pokemon ->
-                                    selectedPokemon = pokemon
-                                    navController.navigate(PokeTrackerScreen.Detail.route)
+                            composable(PokeTrackerScreen.PokemonByGeneration.route) { backStackEntry ->
+                                // Extract generation ID from navigation arguments
+                                val generationId = backStackEntry.arguments?.getString("generationId")?.toIntOrNull() ?: 1
+
+                                val pokemonByGenerationViewModel: PokemonByGenerationViewModel = viewModel()
+
+                                // Fetch data for the generation if the ID is valid
+                                generationId.let {
+                                    pokemonByGenerationViewModel.getPokemonByGeneration(it)
                                 }
+
+                                PokemonByGenerationScreen(
+                                    generationUiState = pokemonByGenerationViewModel.generationUiState,
+                                    onSelectPokemon = { pokemon ->
+                                        selectedPokemon = pokemon
+                                        navController.navigate(PokeTrackerScreen.Detail.route)
+                                    }
+                                )
                             }
                         }
                     }
@@ -239,9 +264,9 @@ fun PokeTrackerApp(
                                 selectedType = type
                                 navController.navigate(PokeTrackerScreen.PokemonByType.route)
                             },
-                            onGenerationClicked = { generation ->
-                                selectedGeneration = generation
-                                navController.navigate(PokeTrackerScreen.PokemonByGeneration.route)
+                            onGenerationClicked = { generationID ->
+                                selectedGeneration = generationID
+                                navController.navigate("generation/$generationID")
                             },
                         )
                     }
@@ -268,15 +293,26 @@ fun PokeTrackerApp(
                             navController.navigate(PokeTrackerScreen.Detail.route)
                         }
                     }
-                    composable(PokeTrackerScreen.PokemonByGeneration.route) {
-                        val generationViewModel: PokemonByGenerationViewModel = viewModel()
-                        PokemonByGenerationScreen(
-                            generationUiState = generationViewModel.generationUiState,
-                        ) { pokemon ->
-                            selectedPokemon = pokemon
-                            navController.navigate(PokeTrackerScreen.Detail.route)
+                    composable(PokeTrackerScreen.PokemonByGeneration.route) { backStackEntry ->
+                        // Extract generation ID from navigation arguments
+                        val generationId = backStackEntry.arguments?.getString("generationId")?.toIntOrNull() ?: 1
+
+                        val pokemonByGenerationViewModel: PokemonByGenerationViewModel = viewModel()
+
+                        // Fetch data for the generation if the ID is valid
+                        generationId.let {
+                            pokemonByGenerationViewModel.getPokemonByGeneration(it)
                         }
+
+                        PokemonByGenerationScreen(
+                            generationUiState = pokemonByGenerationViewModel.generationUiState,
+                            onSelectPokemon = { pokemon ->
+                                selectedPokemon = pokemon
+                                navController.navigate(PokeTrackerScreen.Detail.route)
+                            }
+                        )
                     }
+
                 }
             }
         }

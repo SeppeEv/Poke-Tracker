@@ -1,5 +1,6 @@
 package com.example.application.ui.screens.pokemon
 
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -23,21 +24,28 @@ class PokemonByGenerationViewModel : ViewModel() {
     var generationUiState: GenerationUiState by mutableStateOf(GenerationUiState.Loading)
         private set
 
-    init {
-        getPokemonByGeneration()
-    }
+    private var currentGenerationId: Int? = null
 
-    private fun getPokemonByGeneration() {
-       viewModelScope.launch {
-           generationUiState = GenerationUiState.Loading
-           generationUiState = try {
-               val generation = PokeApi.retrofitService.getGeneration(1)
-               GenerationUiState.Success(
-                   generation = generation
-               )
-           } catch (e: Exception) {
-               GenerationUiState.Error
-           }
-       }
+    fun getPokemonByGeneration(generationId: Int) {
+        if (currentGenerationId == generationId) {
+            return
+        }
+        currentGenerationId = generationId
+
+        Log.d("PokemonByGenerationViewModel", "getPokemonByGeneration: $generationId")
+        viewModelScope.launch {
+            generationUiState = GenerationUiState.Loading
+            generationUiState = try {
+                val generation = PokeApi.retrofitService.getGeneration(generationId)
+                Log.d("PokemonByGenerationViewModel", "getPokemonByGeneration: $generation")
+                GenerationUiState.Success(
+                    generation = generation
+                )
+            } catch (e: Exception) {
+                Log.e("PokemonByGenerationViewModel", "getPokemonByGeneration: ${e.message}", e)
+                GenerationUiState.Error
+            }
+        }
+
     }
 }
