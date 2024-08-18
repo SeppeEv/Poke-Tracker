@@ -1,34 +1,30 @@
-package com.example.application.data
+import com.example.application.data.FavoritePokemon
+import com.example.application.data.FavoritePokemonDao
+import com.example.application.model.PokemonResponse
 
-import kotlinx.coroutines.flow.Flow
+class PokemonsRepository(private val favoritePokemonDao: FavoritePokemonDao) {
 
-/**
- * Repository module for handling data operations.
- */
-interface PokemonsRepository {
+    suspend fun addFavorite(pokemon: PokemonResponse) {
+        val favoritePokemon = FavoritePokemon(
+            id = pokemon.id,
+            name = pokemon.name ?: "",
+        )
+        favoritePokemonDao.addFavorite(favoritePokemon)
+    }
 
-    /*
-     * Returns a Pokemon with the given id.
-     */
-    suspend fun getPokemon(id: Int): Flow<Pokemon>
+    suspend fun removeFavorite(pokemon: PokemonResponse) {
+        val favoritePokemon = FavoritePokemon(
+            id = pokemon.id,
+            name = pokemon.name ?: "",
+        )
+        favoritePokemonDao.removeFavorite(favoritePokemon)
+    }
 
-    /*
-     * Returns a list of all Pokemon.
-     */
-    suspend fun getAllPokemon(): Flow<List<Pokemon>>
+    suspend fun getFavorites(): List<FavoritePokemon> {
+        return favoritePokemonDao.getFavorites()
+    }
 
-    /*
-     * Inserts a Pokemon into the database.
-     */
-    suspend fun insert(pokemon: Pokemon)
-
-    /*
-     * Updates a Pokemon in the database.
-     */
-    suspend fun update(pokemon: Pokemon)
-
-    /*
-     * Deletes a Pokemon from the database.
-     */
-    suspend fun delete(pokemon: Pokemon)
+    suspend fun isFavorite(name: String): Boolean {
+        return favoritePokemonDao.isFavorite(name)
+    }
 }
