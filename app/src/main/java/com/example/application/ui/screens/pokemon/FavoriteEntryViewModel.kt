@@ -6,26 +6,48 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import com.example.application.data.Favorite
 import com.example.application.data.FavoritesRepository
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.firstOrNull
+
 class FavoriteEntryViewModel(private val favoritesRepository: FavoritesRepository) : ViewModel() {
     var favoriteUiState by mutableStateOf(FavoriteUiState())
         private set
+
     fun updateUiState(favoriteDetails: FavoriteDetails) {
-        favoriteUiState = FavoriteUiState(favoriteDetails = favoriteDetails, isEntryValid = validateInput(favoriteDetails))
+        favoriteUiState = FavoriteUiState(
+            favoriteDetails = favoriteDetails,
+            isEntryValid = validateInput(favoriteDetails)
+        )
     }
+
     suspend fun saveFavorite() {
         if (validateInput()) {
             favoritesRepository.insertFavorite(favoriteUiState.favoriteDetails.toFavorite())
         }
     }
-    private fun validateInput(uiState: FavoriteDetails = favoriteUiState.favoriteDetails): Boolean {
-        return with(uiState) {
-            name.isNotBlank()
-        }
+
+    suspend fun removeFavorite() {
+        favoritesRepository.deleteFavorite(favoriteUiState.favoriteDetails.toFavorite())
     }
-}
-data class FavoriteUiState(
+
+    suspend fun isFavorite(name: String): Boolean {
+        val favoriteFlow: Flow<Favorite?> = favoritesRepository.getFavoriteStreamByName(name)
+
+        // Check if the flow emits any non-null value
+        val firstFavorite = favoriteFlow.firstOrNull()
+        return firstFavorite != null
+    }
+
+    suspend fun getFavorite(name: String): Favorite? {
+        return favoritesRepository.getFavoriteStreamByName(name).firstOrNull()
+    }
+
+    private fun validateInput(uiState: FavoriteDetails = favoriteUiState.favoriteDetails): Boolean {
+        return uiState.name.isNotBlank()
+    }
+}data class FavoriteUiState(
     val favoriteDetails: FavoriteDetails = FavoriteDetails(),
-    val isEntryValid: Boolean = false
+    val isEntryValid: Boolean = true
 )
 data class FavoriteDetails(
     val id: Int = 0,

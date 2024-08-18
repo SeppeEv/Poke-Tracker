@@ -1,4 +1,3 @@
-
 import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -19,10 +18,16 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
@@ -46,11 +51,18 @@ fun PokemonDetailScreen(
     viewModel: FavoriteEntryViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
     val coroutineScope = rememberCoroutineScope()
+    var isFavorite by remember { mutableStateOf(false) }
 
     when (pokemonDetailUiState) {
         is PokemonDetailUiState.Loading -> LoadingScreen(modifier = Modifier.fillMaxSize())
         is PokemonDetailUiState.Success -> {
             val pokemon = pokemonDetailUiState.pokemon
+
+            LaunchedEffect(pokemon?.name) {
+                if (pokemon != null) {
+                    isFavorite = viewModel.isFavorite(pokemon.name)
+                }
+            }
 
             Surface(
                 color = MaterialTheme.colorScheme.background,
@@ -64,10 +76,23 @@ fun PokemonDetailScreen(
                     if (pokemon != null) {
                         PokemonDetailCard(
                             pokemon = pokemon,
+                            isFavorite = isFavorite,
                             onFavoriteClick = {
                                 coroutineScope.launch {
-                                    viewModel.updateUiState(FavoriteDetails(name = pokemon.name))
-                                    viewModel.saveFavorite()
+                                    isFavorite = viewModel.isFavorite(pokemon.name)
+                                    Log.d("PokemonDetailScreen", "Is favorite: $isFavorite")
+
+                                    if (viewModel.isFavorite(pokemon.name)) {
+                                        Log.d("PokemonDetailScreen", "Removing favorite")
+                                        viewModel.getFavorite(pokemon.name)
+                                            ?.let { FavoriteDetails(name = pokemon.name, id = it.id ) }
+                                            ?.let { viewModel.updateUiState(it) }
+                                        viewModel.removeFavorite()
+                                    } else {
+                                        Log.d("PokemonDetailScreen", "Saving favorite")
+                                        viewModel.updateUiState(FavoriteDetails(name = pokemon.name,))
+                                        viewModel.saveFavorite()
+                                    }
                                 }
                             }
                         )
@@ -80,9 +105,11 @@ fun PokemonDetailScreen(
     }
 }
 
+
 @Composable
 fun PokemonDetailCard(
     pokemon: PokemonResponse,
+    isFavorite: Boolean = false,
     onFavoriteClick: () -> Unit
 ) {
     Card(
@@ -109,9 +136,9 @@ fun PokemonDetailCard(
                 Icon(
                     Icons.Rounded.FavoriteBorder,
                     contentDescription = stringResource(id = R.string.favorite),
+                    tint = if (isFavorite) Color.Red else Color.Gray,
                     modifier = Modifier
                         .clickable {
-                            Log.d("PokemonDetailCard", "Favorite ${pokemon.name} clicked")
                             onFavoriteClick()
                         },
                 )
