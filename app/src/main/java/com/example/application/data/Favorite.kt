@@ -9,8 +9,9 @@ import androidx.room.PrimaryKey
  * @param id The id of the favorite Pokemon.
  * @param name The name of the favorite Pokemon.
  */
-@Entity(tableName = "favorite_pokemon")
-data class FavoritePokemon(
-    @PrimaryKey (autoGenerate = true) val id: Int = 0,
+@Entity(tableName = "favorites")
+data class Favorite(
+    @PrimaryKey(autoGenerate = true)
+    val id: Int = 0,
     val name: String,
 )

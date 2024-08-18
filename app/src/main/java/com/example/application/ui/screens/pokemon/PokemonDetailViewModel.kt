@@ -22,9 +22,7 @@ sealed interface PokemonDetailUiState {
 class PokemonDetailViewModel : ViewModel() {
     var pokemonDetailUiState: PokemonDetailUiState by mutableStateOf(PokemonDetailUiState.Loading)
         private set
-
     private var currentPokemonName: String? = null
-
     fun getPokemonDetail(pokemonName: String) {
         if (currentPokemonName == pokemonName) {
             return

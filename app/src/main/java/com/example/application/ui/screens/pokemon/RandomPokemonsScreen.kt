@@ -1,5 +1,6 @@
 package com.example.application.ui.screens.pokemon
 
+import PokemonDetailCard
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -38,8 +39,7 @@ fun RandomPokemonsScreen(
                     if (pokemon != null) {
                         PokemonDetailCard(
                             pokemon = randomPokemonUiState.pokemon,
-                            pokemonType = "TYPE",
-
+                            onFavoriteClick = { pokemon }
                         )
                     }
                 }

@@ -1,6 +1,7 @@
-package com.example.application.ui.screens.pokemon
 
+import android.util.Log
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -10,11 +11,15 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.FavoriteBorder
 import androidx.compose.material3.Card
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -23,21 +28,25 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.rememberAsyncImagePainter
 import com.example.application.R
 import com.example.application.model.PokemonResponse
+import com.example.application.ui.AppViewModelProvider
 import com.example.application.ui.screens.ErrorScreen
 import com.example.application.ui.screens.LoadingScreen
+import com.example.application.ui.screens.pokemon.FavoriteDetails
+import com.example.application.ui.screens.pokemon.FavoriteEntryViewModel
+import com.example.application.ui.screens.pokemon.PokemonDetailUiState
+import kotlinx.coroutines.launch
 
-/**
- * Screen that displays the details of a pokemon.
- *
- * @param pokemonDetailUiState The state of the pokemon.
- */
 @Composable
 fun PokemonDetailScreen(
     pokemonDetailUiState: PokemonDetailUiState,
+    viewModel: FavoriteEntryViewModel = viewModel(factory = AppViewModelProvider.Factory)
 ) {
+    val coroutineScope = rememberCoroutineScope()
+
     when (pokemonDetailUiState) {
         is PokemonDetailUiState.Loading -> LoadingScreen(modifier = Modifier.fillMaxSize())
         is PokemonDetailUiState.Success -> {
@@ -54,8 +63,13 @@ fun PokemonDetailScreen(
                 ) {
                     if (pokemon != null) {
                         PokemonDetailCard(
-                            pokemon = pokemonDetailUiState.pokemon,
-                            pokemonType = "TYPE",
+                            pokemon = pokemon,
+                            onFavoriteClick = {
+                                coroutineScope.launch {
+                                    viewModel.updateUiState(FavoriteDetails(name = pokemon.name))
+                                    viewModel.saveFavorite()
+                                }
+                            }
                         )
                     }
                 }
@@ -66,16 +80,10 @@ fun PokemonDetailScreen(
     }
 }
 
-/**
- * Card that displays the details of a pokemon.
- *
- * @param pokemon The pokemon to display.
- * @param pokemonType The type of the pokemon.
- */
 @Composable
 fun PokemonDetailCard(
     pokemon: PokemonResponse,
-    pokemonType: String,
+    onFavoriteClick: () -> Unit
 ) {
     Card(
         modifier = Modifier
@@ -97,6 +105,15 @@ fun PokemonDetailCard(
                 Text(
                     text = pokemon.name ?: "No pokemon found",
                     style = MaterialTheme.typography.headlineMedium.copy(fontWeight = FontWeight.Bold),
+                )
+                Icon(
+                    Icons.Rounded.FavoriteBorder,
+                    contentDescription = stringResource(id = R.string.favorite),
+                    modifier = Modifier
+                        .clickable {
+                            Log.d("PokemonDetailCard", "Favorite ${pokemon.name} clicked")
+                            onFavoriteClick()
+                        },
                 )
                 Text(
                     text = pokemon.id.toString(),
@@ -162,12 +179,6 @@ fun PokemonDetailCard(
     }
 }
 
-/**
- * Column that displays the status of a pokemon.
- *
- * @param title The title of the status.
- * @param value The value of the status.
- */
 @Composable
 private fun StatusColumn(title: String, value: String) {
     Column(

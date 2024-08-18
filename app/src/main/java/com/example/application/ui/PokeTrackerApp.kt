@@ -1,5 +1,6 @@
 package com.example.application.ui
 
+import PokemonDetailScreen
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
@@ -32,7 +33,6 @@ import com.example.application.ui.screens.pokemon.PokemonByGenerationScreen
 import com.example.application.ui.screens.pokemon.PokemonByGenerationViewModel
 import com.example.application.ui.screens.pokemon.PokemonByTypeScreen
 import com.example.application.ui.screens.pokemon.PokemonByTypeViewModel
-import com.example.application.ui.screens.pokemon.PokemonDetailScreen
 import com.example.application.ui.screens.pokemon.PokemonDetailViewModel
 import com.example.application.ui.screens.pokemon.RandomPokemonsScreen
 import com.example.application.ui.screens.pokemon.RandomPokemonsViewModel
@@ -127,7 +127,8 @@ fun PokeTrackerApp(
                         }
 
                         PokemonDetailScreen(
-                            pokemonDetailUiState = pokemonDetailViewModel.pokemonDetailUiState,)
+                            pokemonDetailUiState = pokemonDetailViewModel.pokemonDetailUiState,
+                            )
                     }
                     composable(PokeTrackerScreen.PokemonByType.route) {backStackEntry ->
                         val typeId = backStackEntry.arguments?.getString("typeId")
